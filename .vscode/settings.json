@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "minix"
+    ],
+    "files.associations": {
+        "const.h": "c",
+        "models.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "libraries.h": "c"
+    }
+}
