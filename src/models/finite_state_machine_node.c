@@ -2,16 +2,12 @@
 #define FINITE_STATE_MACHINE_NODE
 
 #include "../models/models.h"
+#include "../libraries/libraries.h"
+#include "../libraries/array_functions.c"
+#include "../libraries/message_functions.c"
+
 #include "../models/finite_state_machine.c"
-#include "../models/array_functions.c"
-
-typedef struct
-{
-    finite_state_machine_t *fsm;
-    int rec_action_endpoint;
-    int send_status_endpoint;
-
-} finite_state_machine_node_t;
+#include "../models/finite_state_machine_node_status.c"
 
 finite_state_machine_node_t *finite_state_machine_node_init(
     int rec_action_endpoint,
@@ -23,6 +19,7 @@ finite_state_machine_node_t *finite_state_machine_node_init(
 
     self = (finite_state_machine_node_t *)malloc(sizeof(finite_state_machine_node_t));
 
+    self->index = NO_ACTION;
     self->rec_action_endpoint = rec_action_endpoint;
     self->send_status_endpoint = send_status_endpoint;
     self->fsm = finite_state_machine_init(transition_table, begin_state);
@@ -32,7 +29,11 @@ finite_state_machine_node_t *finite_state_machine_node_init(
 
 void node_send_status(finite_state_machine_node_t *self)
 {
-    
+    finite_state_machine_node_status_t *status;
+
+    status = finite_state_machine_node_status_init(self);
+
+
 }
 
 void receive_status_request(finite_state_machine_node_t *self)

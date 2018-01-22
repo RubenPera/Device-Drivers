@@ -8,6 +8,8 @@
 #define NO_ACTION -1
 #define HAS_ACTION 1
 
+#define NO_INDEX -1
+
 // #define IS_MINIX
 
 

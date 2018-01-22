@@ -7,11 +7,6 @@
 //          headers
 #include "../const.h"
 
-//          code
-// #include "../models/finite_state_machine.c"
-// #include "../models/array_functions.c"
-// #include "../nodes/finite_state_machine_node.c"
-
 typedef struct
 {
     int transition_table[STATES][ACTIONS];
@@ -23,10 +18,29 @@ typedef struct
 
 typedef struct
 {
+    finite_state_machine_t *fsm;
+    int rec_action_endpoint;
+    int send_status_endpoint;
+    int index;
+
+} finite_state_machine_node_t;
+
+typedef struct
+{
+    int endpoint;
+    int index;
+    int sensitivity_list[ACTIONS];
+    int alphabet[ACTIONS];
+
+} finite_state_machine_node_status_t;
+
+typedef struct
+{
     int sensitivity_list[ACTIONS];
     int alphabet[ACTIONS];
     int endpoint;
-} finite_state_machine_derivative_t;
+    int index;
+} finite_state_machine_node_derivative_t;
 
 //          finite_state_machine
 finite_state_machine_t *finite_state_machine_init(
@@ -43,14 +57,29 @@ void fsm_set_sensitivity_list(
     finite_state_machine_t *self,
     int sensitivity_list[ACTIONS]);
 
-//          finite_state_machine_node_derivative
-finite_state_machine_derivative_t *fsm_derivative_init(
-    finite_state_machine_t *fsm,
-    int endpoint);
+//          finite_state_machine_node
+finite_state_machine_node_t *finite_state_machine_node_init(
+    int rec_action_endpoint,
+    int send_status_endpoint,
+    int transition_table[STATES][ACTIONS],
+    int begin_state);
+void node_send_status(finite_state_machine_node_t *self);
+void receive_status_request(finite_state_machine_node_t *self);
 
-//          array_functions
-void array_copy(
-    int list_to[ACTIONS],
-    int list_from[ACTIONS]);
+//          finite_state_machine_node_status
+finite_state_machine_node_status_t *finite_state_machine_node_status_init(
+    finite_state_machine_node_t *node);
+
+//          finite_state_machine_node_derivative
+finite_state_machine_node_derivative_t *finite_state_machine_node_derivative_init(
+    finite_state_machine_node_status_t *status);
+void derivative_send_index(
+    finite_state_machine_node_derivative_t *self,
+    int sender,
+    int action);
+void derivative_send_action(
+    finite_state_machine_node_derivative_t *self,
+    int sender,
+    int action);
 
 #endif
