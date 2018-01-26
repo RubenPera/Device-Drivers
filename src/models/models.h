@@ -1,6 +1,7 @@
 #ifndef MODELS_H
 #define MODELS_H
 
+//          libraries
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -42,6 +43,17 @@ typedef struct
     int index;
 } finite_state_machine_node_derivative_t;
 
+typedef struct
+{
+    int endpoint;
+    finite_state_machine_node_derivative_t *derivatives[DERIVATIVES];
+} synchronization_server_t;
+
+typedef struct
+{
+    int action;
+    finite_state_machine_node_derivative_t *derivatives[DERIVATIVES];
+} action_derivatives_t;
 //          finite_state_machine
 finite_state_machine_t *finite_state_machine_init(
     int transition_table[STATES][ACTIONS],
@@ -82,4 +94,18 @@ void derivative_send_action(
     int sender,
     int action);
 
+//          synchronization_server
+synchronization_server_t *synchronization_server_init(
+    int endpoint);
+void synchronization_server_receive_status(
+    synchronization_server_t *self,
+    finite_state_machine_node_status_t *status);
+finite_state_machine_node_derivative_t *synchronization_server_status_to_derivative(
+    finite_state_machine_node_status_t *status);
+int synchronization_server_add_derivative(
+    synchronization_server_t *self,
+    finite_state_machine_node_derivative_t *status);
+int synchronization_server_set_derivative(
+    synchronization_server_t *self,
+    finite_state_machine_node_derivative_t *derivative);
 #endif

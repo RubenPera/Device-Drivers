@@ -20,6 +20,12 @@ finite_state_machine_t *finite_state_machine_init(
     return self;
 }
 
+void make_transition(
+    finite_state_machine_t *self,
+    int action)
+{
+}
+
 int fsm_next_state(
     finite_state_machine_t *self,
     int action)
@@ -73,17 +79,17 @@ void fsm_set_sensitivity_list(
     array_copy((int *)self->sensitivity_list, (int *)self->transition_table[self->cur_state]);
 }
 
-// int main()
-// {
-//     int begin_state = 0;
+    // int main()
+    // {
+    //     int begin_state = 0;
 
-//     int transition_table[STATES][ACTIONS] = {
-//         {NO_ACTION, 1},
-//         {0, NO_ACTION}};
+    //     int transition_table[STATES][ACTIONS] = {
+    //         {NO_ACTION, 1},
+    //         {0, NO_ACTION}};
 
-//     finite_state_machine_t *fsm = finite_state_machine_init(transition_table, begin_state);
+    //     finite_state_machine_t *fsm = finite_state_machine_init(transition_table, begin_state);
 
-//     return 0;
-// }
+    //     return 0;
+    // }
 
 #endif

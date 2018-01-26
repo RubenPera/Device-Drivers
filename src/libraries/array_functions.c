@@ -1,7 +1,7 @@
 #ifndef ARRAY_FUNCTIONS
 #define ARRAY_FUNCTIONS
 
-#include "models.h"
+#include "../models/models.h"
 
 void array_copy(int list_to[ACTIONS], int list_from[ACTIONS])
 {
