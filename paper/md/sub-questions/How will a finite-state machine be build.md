@@ -35,7 +35,8 @@ In a more advanced language a hash table would have been used, and this disadvan
 
 #### How will a finite-state machine save its sensitivity-list
 
-The sensitivity-list is used to determine if a finite-state machine can execute an action from the current state and holds all the actions the finite-state machine can execute in the current state. The sensitivity-list will be derived from the transition-table.
+The sensitivity-list is used to determine if a finite-state machine can execute an action from the current state and contains all the actions that can be executed from the current state the finite-state machine is in.  
+The sensitivity-list will be derived from the transition-table.
 
 The sensitivity-list has the following requirements:
 
@@ -50,7 +51,8 @@ The design of the sensitivity-list is similar to that of the inner arrays of the
 
 #### How will a finite-state machine save its alphabet
 
-The alphabet is used to determine if a finite-state machine is ever able to execute an action and holds all the actions the finite-state machine is ever capable of executing. The alphabet will be derived from the transition-table.
+The alphabet is used to determine if a finite-state machine can ever execute an action and should contain all of the actions that a finite-state machine could ever execute.  
+The alphabet will be derived from the transition-table.
 
 The alphabet has the following requirements:
 
@@ -62,3 +64,48 @@ The alphabet will consist of an one-dimensional array where the index is the to 
 The result will be in range of -1 to the maximum value of an integer. Is the result -1 then the to be executed action is not a valid action cannot ever be executed, any other value means that the action can be executed.
 
 The design of the alphabet is similar to that of the inner arrays of the transition-table, and has therefore the same advantages and disadvantages as the transition-table.
+
+### How will a finite-state machine determine its sensitivity-list and alphabet
+
+As described above the design of the sensitivity-list and alphabet are similar to the inner arrays of the transaction-table.  
+All of them return either an -1, not a viable action, or a value in the range from 0 to the maximum value of an integer, is a viable action, when using an action as index.
+
+#### How will a finite-state machine determine its sensitivity-list
+
+The sensitivity-list is equal to the inner array that is returned when inserting the current state in the outer array of the transition-table.  
+This is because when using the current state as the index on the outer array of the transition-table, an array is returned that contains all the actions that can be executed from the current state, and this is the sensitivity-list.
+
+The following steps will be taken to determine the sensitivity-list:
+
+- Copy the inner array that is returned when inserting the current state in the outer array of the transition-table into the sensitivity-list.
+
+#### How will a finite-state machine determine its alphabet
+
+The alphabet contains all the actions that a finite-state machine can execute from any state. Each action in the transition-table must be checked if it can ever be executed, and if so, add it to the alphabet.
+
+The following steps will be taken to determine the alphabet:
+
+- Create an alphabet with all values on False.
+- Iterate over every action in the transition-table.
+- If an action can be executed set that action in the alphabet on True.
+
+
+#### How will a finite-state machine make transitions
+
+Making a transition is to execute an action, determine a new sensitivity-list and new current state, and setting the new sensitivity-list and current state.
+
+How a action is executed and the new sensitivity-list is determined is dependent on what kind of finite-state machine is making the transition. There are two different kind of transitions, a Thread transition, and a device-driver transition.
+
+**Thread transition:**  
+The new sensitivity-list is a direct consequence of the fsp design.
+
+**Device-driver transition:**  
+The new sensitivity-list is either direct consequence of the fsp design or a consequence of the hardware or sensor data the device-driver operates upon.
+
+This leads to the following steps of making a transition:
+
+- Determine if the action can be executed, using the transition-table, current state and to be executed action.
+- Executing the action, this will return the new sensitivity-list, this could be either the Thread implementation or the device-driver implementation. An empty sensitivity-list could also be returned indicating that the action could not successfully execute.
+- Checking if the new sensitivity-list is not empty, if it is empty not proceed.
+- Determine the new state of the finite-state machine using its transition-table, current state and executed action.
+- Set the finite-state machine its new state and the new sensitivity-list.
