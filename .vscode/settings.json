@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
-        "minix"
+        "minix",
+        "server",
+        "synchronization"
     ],
     "files.associations": {
         "const.h": "c",
@@ -8,5 +10,9 @@
         "stdlib.h": "c",
         "stdio.h": "c",
         "libraries.h": "c"
+    },
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": true,
     }
 }

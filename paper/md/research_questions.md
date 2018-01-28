@@ -12,6 +12,13 @@ This paper has as aim to design and implement a generic synchronization server. 
 
 This research question is divided into sub-questions:
 
+- How will the communication between processes take place under Minix?
+  - How can messages be send between processes under Minix?
+    - What is an endpoint?
+    - How can messages be send?
+    - How can messages be received?
+  - How can memory be shared between processes under Minix?
+
 - How will a finite-state machine be build?
   - How will a finite-state machine save its transition-table, sensitivity-list and alphabet?
     - How will a finite-state machine save its transition-table?
@@ -25,10 +32,7 @@ This research question is divided into sub-questions:
 - How will a synchronization-server be build?
   - How will the synchronization-server save the data of the finite-state machines?
   - How will the synchronization-server determine the next action for the finite-state machines?
-
-- How will the communication between processes take place under Minix?
-  - How can messages be send between processes under Minix?
-  - How can memory be shared between processes under Minix?
+  - How will the synchronization-server determine the finite-state machines that will execute an action?
 
 - How will the communication between a finite-state machine and the synchronization-server take place?
   - How will a finite-state machine send their status to the synchronization-server?
