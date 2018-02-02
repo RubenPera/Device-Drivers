@@ -1,0 +1,19 @@
+set Keys = {w, a, s, d}
+set Directions = {forward, left, back, right} 
+
+                // Drivers
+STDIN_DRIVER = (check_stdin_value -> Keys -> STDIN_DRIVER).
+STDOUT_DRIVER = (Directions -> write_stdout -> STDOUT_DRIVER).
+
+
+                // Thread
+CONTROLLER = (w -> forward -> CONTROLLER 
+                    | a -> left -> CONTROLLER 
+                    | s -> back -> CONTROLLER
+                    | d -> right -> CONTROLLER).
+
+||DRIVERS = (STDIN_DRIVER || STDOUT_DRIVER).
+
+||THREADS = (CONTROLLER).
+
+||COMBINED = (DRIVERS || THREADS).

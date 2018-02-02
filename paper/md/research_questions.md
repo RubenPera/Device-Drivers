@@ -41,6 +41,6 @@ This research question is divided into sub-questions:
   - How will a finite-state machine send their status to the synchronization-server?
   - How will the synchronization-server send an action to a finite-state machine?
 
-- How will the functionalities of the device-drivers be implemented?
+- What will be the functionality of the device-drivers be implemented?
   - How can the functionality of device-driver0 be implemented?
   - How can the functionality of device-driver1 be implemented?
