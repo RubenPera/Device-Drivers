@@ -2,6 +2,12 @@
 
 In this chapter the design of the application will be discussed.
 
+First the class diagram for the application will be provided, then multiple sequence-diagrams and lastly the LTSA model.
+
+## Class-diagram
+
+
+
 First the following questions will be answered us
 ing sequence-diagrams:
 
