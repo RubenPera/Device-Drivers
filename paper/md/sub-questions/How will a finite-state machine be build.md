@@ -89,7 +89,6 @@ The following steps will be taken to determine the alphabet:
 - Iterate over every action in the transition-table.
 - If an action can be executed set that action in the alphabet on True.
 
-
 #### How will a finite-state machine make transitions
 
 Making a transition is to execute an action, determine a new sensitivity-list and new current state, and setting the new sensitivity-list and current state.

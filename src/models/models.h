@@ -20,7 +20,7 @@ typedef struct
 typedef struct
 {
     finite_state_machine_t *fsm;
-    int rec_action_endpoint;
+    int endpoint;
     int send_status_endpoint;
     int index;
 

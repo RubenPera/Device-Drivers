@@ -27,13 +27,27 @@ finite_state_machine_node_t *finite_state_machine_node_init(
     return self;
 }
 
-void node_send_status(finite_state_machine_node_t *self)
+void node_send_status(
+    finite_state_machine_node_t *self)
 {
     finite_state_machine_node_status_t *status;
 
     status = finite_state_machine_node_status_init(self);
 
+    send_grant_and_block(
+        self->endpoint,
+        self->send_status_endpoint,
+        status,
+        sizeof(status))
+}
 
+void node_receive_action(
+    finite_state_machine_node_t *self,
+    int action)
+{
+    make_transition(self->fsm, action);
+
+    node_send_status(self);
 }
 
 void receive_status_request(finite_state_machine_node_t *self)

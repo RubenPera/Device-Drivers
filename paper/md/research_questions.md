@@ -12,7 +12,7 @@ This paper has as aim to design and implement a generic synchronization server. 
 
 This research question is divided into sub-questions:
 
-- What is considered a FSP based design?
+- What different FSP elements will be used in this paper?
 - How will the communication between processes take place under Minix?
   - What are messages and how can they be used to communicate between processes under Minix?
     - What are messages in Minix?

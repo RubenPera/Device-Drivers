@@ -8,7 +8,7 @@ In this sub-question will be discussed how the communication between finite-stat
 
 In this sub-question will be discussed what a finite-state machine status is and how it will be communicated with the synchronization-server.
 
-#### What is a finite-state machine status
+#### What is a finite-state machine status and how will it be stored
 
 To determine how a finite-state machine will send its status first needs to be determined what the status of a finite-state machine is.  
 The status of a finite-state machine is all the information needed by synchronization-server to determine the next action and send the determined action.
@@ -41,7 +41,7 @@ When the finite-state machine status message has been send the synchronization-s
 
 ### How will the synchronization-server communicate actions to the finite-state machines
 
-After the synchronization-server determines the next action the finite-state machines will execute this action will be send to the finite-state machines.  
+After the synchronization-server determines the next action the finite-state machines will execute this action will be send to the finite-state machines.
 
 The steps of sending the action to the finite-state machines is as following, this assumes the list of finite-state derivatives that will execute the action and the action that will be executed is already determined:
 

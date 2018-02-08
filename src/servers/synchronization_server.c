@@ -1,3 +1,6 @@
+#include <time.h>
+#include <stdlib.h>
+
 #include "../models/models.h"
 #include "../libraries/libraries.h"
 
@@ -10,6 +13,8 @@ synchronization_server_t *synchronization_server_init(
     self = (synchronization_server_t *)malloc(sizeof(synchronization_server_t));
 
     self->endpoint = endpoint;
+
+    srand(time(NULL));
 
     return self;
 }
@@ -74,7 +79,46 @@ int synchronization_server_set_derivative(
 action_derivatives_t *executable_action_derivatives(
     synchronization_server_t *self)
 {
-    int action = next_action(self);
+
+    int action = 0;
+    int derivatives[DERIVATIVES] = {NO_ACTION};
+
+    action = next_action(self);
+
+    get_executable_derivatives(self, derivatives, action);
+    send_action_to_derivatives(self, derivatives, action);
+}
+
+void get_executable_derivatives(
+    synchronization_server_t *self,
+    int derivatives[DERIVATIVES),
+    int action
+{
+    int i = 0;
+
+    for (i = 0; i < ACTIONS; i++)
+    {
+        if (self->derivatives[i].alphabet != NO_ACTION &&
+            self->derivatives[i].sensitivity_list != NO_ACTION)
+        {
+            derivatives[i] = HAS_ACTION;
+        }
+    }
+}
+
+void send_action_to_derivatives(synchronization_server_t *self,
+    int derivatives[DERIVATIVES),
+    int action )
+{
+    int i = 0;
+
+    for (i = 0; i < ACTIONS; i++)
+    {
+        if (derivatives[i] != NO_ACTION)
+        {
+            derivative_send_action(self->derivatives[i], self->endpoint, action);
+        }
+    }
 }
 
 int next_action(
@@ -85,12 +129,8 @@ int next_action(
 
     array_copy(combined_action, combined_actions(self));
     array_copy(valid_actions, valid_actions(self, combined_action));
-}
 
-int random_action_from_actions(
-    int actions[ACTIONS])
-{
-    
+    return random_action_from_actions(valid_actions);
 }
 
 int *valid_actions(
@@ -124,7 +164,7 @@ int *valid_actions(
     return actions;
 }
 
-int *combined_actions(
+int combined_actions(
     synchronization_server_t *self)
 {
     int combined_actions[ACTIONS] = {NO_ACTION};
@@ -143,4 +183,21 @@ int *combined_actions(
     }
 
     return combined_actions;
+}
+
+int random_action_from_actions(
+    int actions[ACTIONS])
+{
+    int i = 0, selected_action = NO_ACTION;
+
+    for (i = rand(); i < ACTIONS; i++)
+    {
+        if (actions[i] != NO_ACTION)
+        {
+            selected_action = i;
+            break;
+        }
+    }
+
+    return selected_action == NO_ACTION ? random_action_from_actions(actions) : selected_action;
 }

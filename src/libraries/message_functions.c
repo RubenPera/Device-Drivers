@@ -7,8 +7,7 @@ void send_grant_and_block(
     int sender,
     int receiver,
     void *data,
-    int size,
-    int cpf_value)
+    int size)
 {
 #ifdef IS_MINIX
     message m;

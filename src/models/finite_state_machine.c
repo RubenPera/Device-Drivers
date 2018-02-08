@@ -24,6 +24,25 @@ void make_transition(
     finite_state_machine_t *self,
     int action)
 {
+    int sensitivity_list[ACTIONS];
+
+    if (fsm_can_execute_action(self, action))
+    {
+        execute_action(self, action, sensitivity_list);
+
+        if (sensitivity_list != NULL)
+        {
+            array_copy(self->sensitivity_list, sensitivity_list);
+            self->cur_state = fsm_next_state(self, action);
+        }
+    }
+}
+
+int fsm_can_execute_action(
+    finite_state_machine_t *self,
+    int action)
+{
+    return fsm_next_state(self, action) != NO_ACTION;
 }
 
 int fsm_next_state(
