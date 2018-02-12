@@ -3,7 +3,7 @@
 
 #include "../models/models.h"
 
-void array_copy(int list_to[ACTIONS], int list_from[ACTIONS])
+void array_copy(void list_to[ACTIONS], void list_from[ACTIONS])
 {
     int i = 0;
 

@@ -5,8 +5,8 @@
 
 //          array_functions
 void array_copy(
-    int list_to[ACTIONS],
-    int list_from[ACTIONS]);
+    void list_to[ACTIONS],
+    void list_from[ACTIONS]);
 
 //          message_functions
 void send_grant_and_block(
@@ -19,4 +19,10 @@ void send_action(
     int sender,
     int receiver,
     int action);
+int receive_index();
+int receive_action();
+
+int minix_get_pid();
+int minix_get_pid_synchronization_server();
+finite_state_machine_node_status_t * receive_status();
 #endif

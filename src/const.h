@@ -10,8 +10,12 @@
 
 #define NO_INDEX -1
 
-// #define IS_MINIX
+#define IS_READY 1
+#define NOT_READY 0
 
+ #define IS_MINIX
+
+// Actions
 
 
 #endif

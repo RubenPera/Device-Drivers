@@ -2,6 +2,7 @@
 #define FINITE_STATE_MACHINE
 
 #include "models.h"
+#include "../libraries/libraries.h"
 
 finite_state_machine_t *finite_state_machine_init(
     int transition_table[STATES][ACTIONS],

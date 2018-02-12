@@ -2,6 +2,7 @@
 
 #include "../libraries/libraries.h"
 #include "../libraries/array_functions.c"
+#include "models.h"
 
 finite_state_machine_node_status_t *finite_state_machine_node_status_init(
     finite_state_machine_node_t *node)
@@ -10,7 +11,7 @@ finite_state_machine_node_status_t *finite_state_machine_node_status_init(
 
     self = (finite_state_machine_node_status_t *)malloc(sizeof(finite_state_machine_node_status_t));
 
-    self->endpoint = node->rec_action_endpoint;
+    self->endpoint = node->endpoint;
     self->index = node->index;
     
     array_copy(self->alphabet, node->fsm->alphabet);

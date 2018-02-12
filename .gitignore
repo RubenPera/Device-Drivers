@@ -1,2 +1,9 @@
 src/drivers/a.out
 src/nodes/a.out
+.idea
+CMakeLists.txt
+CMakeCache.txt
+cmake-build-debug/CMakeFiles/
+cmake-build-debug/cmake_install.cmake
+cmake-build-debug/Makefile
+cmake-build-debug/Device_Drivers.cbp
