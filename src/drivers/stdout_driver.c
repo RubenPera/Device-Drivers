@@ -6,11 +6,17 @@ void make_transition(
         finite_state_machine_t *self,
         int action);
 
-void driver0_init() {
+void driver1_init() {
     finite_state_machine_node_t *self;
     int endpoint = 0;
     int synchronization_server_endpoint = 0;
-    int transition_table[STATES][ACTIONS] = {NO_ACTION};
+    int transition_table[STATES][ACTIONS] = {
+        {-1,-1,-1,-1,-1,1,-1,1,1,1},
+        {-1,-1,-1,-1,-1,-1,0,-1,-1,-1},
+        {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+        {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+        {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
+    };
     int begin_state = NO_ACTION;
 
     endpoint = minix_get_pid();
@@ -30,7 +36,7 @@ void run(finite_state_machine_node_t *self) {
     while (1) {
         if (self->index == NO_ACTION) {
             node_send_presence_announcement(self);
-            self->index = receive_index();
+            node_receive_index(self);
         } else {
             driver_receive_action(self);
         }
@@ -43,6 +49,7 @@ void driver_receive_action(
 
     action = receive_action();
     make_transition(self->fsm, action);
+    node_send_status(self);
 }
 
 void make_transition(
@@ -75,11 +82,11 @@ void execute_action(
     }
 }
 
-void action_0(int sensitivity_list[ACTIONS])
+void action_(int sensitivity_list[ACTIONS])
 {
 
 }
 
-int main() {
-    driver0_init();
-}
+//int main() {
+//    driver0_init();
+//}

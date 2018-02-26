@@ -3,14 +3,17 @@ set Directions = {forward, left, back, right}
 
                 // Drivers
 STDIN_DRIVER = (check_stdin_value -> Keys -> STDIN_DRIVER).
-STDOUT_DRIVER = (Directions -> write_stdout -> STDOUT_DRIVER).
+||STDIN_EXPORT = (STDIN_DRIVER).
 
+STDOUT_DRIVER = (Directions -> write_stdout -> STDOUT_DRIVER).
+||STDOUT_EXPORT = (STDOUT_DRIVER).
 
                 // Thread
 CONTROLLER = (w -> forward -> CONTROLLER 
                     | a -> left -> CONTROLLER 
                     | s -> back -> CONTROLLER
                     | d -> right -> CONTROLLER).
+||CONTROLLER_EXPORT = (CONTROLLER).
 
 ||DRIVERS = (STDIN_DRIVER || STDOUT_DRIVER).
 

@@ -1,6 +1,7 @@
 src/drivers/a.out
 src/nodes/a.out
 .idea
+.vs
 CMakeLists.txt
 CMakeCache.txt
 cmake-build-debug/CMakeFiles/

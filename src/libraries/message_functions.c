@@ -64,7 +64,6 @@ int minix_get_pid_synchronization_server()
 
 finite_state_machine_node_status_t * receive_status()
 {
-
     finite_state_machine_node_status_t * status;
 
 #ifdef  IS_MINIX

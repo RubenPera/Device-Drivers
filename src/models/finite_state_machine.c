@@ -99,6 +99,16 @@ void fsm_set_sensitivity_list(
     array_copy((int *)self->sensitivity_list, (int *)self->transition_table[self->cur_state]);
 }
 
+void fsm_set_sensitivity_list_empty(int sensitivity_list[ACTIONS])
+{
+    int i = 0;
+
+    for (i = 0; i < ACTIONS; i++)
+    {
+        sensitivity_list[i] = NO_ACTION;
+    }
+}
+
     // int main()
     // {
     //     int begin_state = 0;

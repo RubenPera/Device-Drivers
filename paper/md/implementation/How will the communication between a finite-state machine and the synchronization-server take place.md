@@ -42,17 +42,19 @@ void node_send_status(finite_state_machine_node_t *self)
 }
 ```
 
-The send_grant_and_block is a abstraction method written for creating and sending grants and is included in the appendix.
+The send_grant_and_block is an abstraction method written for creating and sending grants and is included in the appendix.
 
 The synchronization-server will use the following code snippet for receiving a finite-state machine node status.
 
 ``` C
 void synchronization_server_receive_status(
-    synchronization_server_t *self,
-    finite_state_machine_node_status_t *status)
+    synchronization_server_t *self)
 {
     finite_state_machine_node_derivative_t *derivative;
-    int index = NO_ACTION;
+
+    finite_state_machine_node_status_t *status int index = NO_ACTION;
+
+    status = receive_status();
 
     derivative = synchronization_server_status_to_derivative(status);
 
@@ -100,12 +102,13 @@ void derivative_send_action(
 The finite-state machine node uses the following code snippet for receiving the action.
 
 ``` C
-void node_receive_action(
-    finite_state_machine_node_t *self,
-    int action)
+void driver_receive_action(
+    finite_state_machine_node_t *self)
 {
-    make_transition(self->fsm, action);
+    int action;
 
+    action = receive_action();
+    make_transition(self->fsm, action);
     node_send_status(self);
 }
 ```

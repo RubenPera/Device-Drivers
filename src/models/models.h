@@ -70,11 +70,13 @@ void fsm_set_sensitivity_list(
     finite_state_machine_t *self,
     int sensitivity_list[ACTIONS]);
 int fsm_can_execute_action(
-        finite_state_machine_t *self,
-        int action);
+    finite_state_machine_t *self,
+    int action);
 int fsm_next_state(
-        finite_state_machine_t *self,
-        int action);
+    finite_state_machine_t *self,
+    int action);
+void fsm_set_sensitivity_list_empty(
+    int sensitivity_list[ACTIONS]);
 
 //          finite_state_machine_node
 finite_state_machine_node_t *finite_state_machine_node_init(
@@ -85,7 +87,9 @@ finite_state_machine_node_t *finite_state_machine_node_init(
 void node_send_status(finite_state_machine_node_t *self);
 void receive_status_request(finite_state_machine_node_t *self);
 void node_send_presence_announcement(
-        finite_state_machine_node_t * self);
+    finite_state_machine_node_t *self);
+void node_set_index(finite_state_machine_node_t *self, int index);
+void node_receive_index(finite_state_machine_node_t *self);
 
 //          finite_state_machine_node_status
 finite_state_machine_node_status_t *finite_state_machine_node_status_init(

@@ -26,22 +26,23 @@ typedef struct
 
 ### How will the synchronization-server determine the next action for the finite-state machines
 
-For determining the next action that the finite-state machines will execute the following code snippet is used:
+For determining the next action that the finite-state machines will execute, the following code snippet is used:
 
 ``` C
 int next_action(
     synchronization_server_t *self)
 {
-    int combined_action[ACTIONS] = {NO_ACTION};
-    int valid_actions[ACTIONS] = {NO_ACTION};
 
-    array_copy(combined_action, combined_actions(self));
-    array_copy(valid_actions, valid_actions(self, combined_action));
+    int actions[ACTIONS] = {NO_ACTION};
 
-    return random_action_from_actions(valid_actions);
+    get_combined_actions(self, actions);
+
+    get_valid_actions(self, actions);
+
+    return random_action_from_actions(actions);
 }
 
-int *valid_actions(
+void get_valid_actions(
     synchronization_server_t *self,
     int actions[ACTIONS])
 {
@@ -68,14 +69,12 @@ int *valid_actions(
             actions[a] = NO_ACTION;
         }
     }
-
-    return actions;
 }
 
-int combined_actions(
-    synchronization_server_t *self)
+void get_combined_actions(
+    synchronization_server_t *self,
+    int combined_actions[ACTIONS])
 {
-    int combined_actions[ACTIONS] = {NO_ACTION};
     int d = 0, a = 0;
 
     for (d = 0; d < DERIVATIVES; d++)
@@ -89,8 +88,6 @@ int combined_actions(
             }
         }
     }
-
-    return combined_actions;
 }
 
 int random_action_from_actions(
@@ -108,28 +105,5 @@ int random_action_from_actions(
     }
 
     return selected_action == NO_ACTION ? random_action_from_actions(actions) : selected_action;
-}
-```
-
-### How will the synchronization-server determine the finite-state machines that will execute an action
-
-For determining the finite-state machines will execute an action the following code snippet is used:
-
-``` C
-void get_executable_derivatives(
-    synchronization_server_t *self,
-    int derivatives[DERIVATIVES),
-    int action
-{
-    int i = 0;
-
-    for (i = 0; i < ACTIONS; i++)
-    {
-        if (self->derivatives[i].alphabet != NO_ACTION &&
-            self->derivatives[i].sensitivity_list != NO_ACTION)
-        {
-            derivatives[i] = HAS_ACTION;
-        }
-    }
 }
 ```

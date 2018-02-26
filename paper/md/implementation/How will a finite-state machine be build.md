@@ -102,4 +102,4 @@ int fsm_next_state(
 }
 ```
 
-However, the function make_transition has to implemented by each finite-state machine that uses it, as the function execute_action is different for every finite-state machine implementation. For example the function execute_action for STDIN_DRIVER is different than that of STDOUT_DRIVER.
+However, the function make_transition has to implemented by each finite-state machine that uses it, as the function execute_action is different for every finite-state machine implementation.

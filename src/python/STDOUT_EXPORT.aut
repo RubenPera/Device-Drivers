@@ -1,0 +1,6 @@
+des(0,5,2)
+(0,forward,1)
+(0,left,1)
+(0,back,1)
+(0,right,1)
+(1,write_stdout,0)
