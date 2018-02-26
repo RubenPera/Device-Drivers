@@ -59,6 +59,8 @@ synchronization_server_t *synchronization_server_init(
 
     srand(time(NULL));
 
+    printf("Startup synchronization_server \n");
+
     run(self);
 }
 

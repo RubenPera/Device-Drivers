@@ -13,6 +13,7 @@ CONTROLLER = (w -> forward -> CONTROLLER
                     | a -> left -> CONTROLLER 
                     | s -> back -> CONTROLLER
                     | d -> right -> CONTROLLER).
+
 ||CONTROLLER_EXPORT = (CONTROLLER).
 
 ||DRIVERS = (STDIN_DRIVER || STDOUT_DRIVER).

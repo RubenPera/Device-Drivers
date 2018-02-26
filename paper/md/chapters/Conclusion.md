@@ -1,0 +1,11 @@
+# Conclusion
+
+Every Must have and Should have discussed in the Requirememnts chapter is implemented in the code, discussed in the Implementation chapter and tested in the Test chapter.
+
+The main question is:
+
+How can a synchronization server be build that synchronizes an unbeknownst number of threads, where every thread is based on a design.
+
+The main question is devided into smaller sub-questions which are answered in the Research chapter. The implementation of the items discussed in the Research chapter is discussed in the Implementation chapter and tested in the Test chapter.
+
+This concludes the main question answered.

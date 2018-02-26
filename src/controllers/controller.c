@@ -30,6 +30,8 @@ controller_init()
         transition_table,
         begin_state);
 
+    printf("Startup stdin_driver \n");
+
     run(self);
 }
 

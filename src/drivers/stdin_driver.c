@@ -33,6 +33,8 @@ stdin_driver_init()
         transition_table,
         begin_state);
 
+    printf("Startup stdin_driver \n");
+
     run(self);
 }
 
@@ -43,7 +45,9 @@ void run(finite_state_machine_node_t *self)
         if (self->index == NO_ACTION)
         {
             node_send_presence_announcement(self);
+            printf("Send presence, stdin_driver \n");
             node_receive_index(self);
+            printf("Received index, stdin_driver \n");
         }
         else
         {

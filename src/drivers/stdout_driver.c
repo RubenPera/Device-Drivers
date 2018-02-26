@@ -32,6 +32,8 @@ void driver1_init() {
             begin_state
     );
 
+    printf("Startup stdout_driver \n");
+
     run(self);
 }
 
@@ -39,7 +41,9 @@ void run(finite_state_machine_node_t *self) {
     while (1) {
         if (self->index == NO_ACTION) {
             node_send_presence_announcement(self);
+            printf("Send presence, stdout_driver \n");
             node_receive_index(self);
+            printf("Received index, stdout_driver \n");
         } else {
             driver_receive_action(self);
         }
