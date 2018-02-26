@@ -6,7 +6,7 @@ In this section the implemented of the two device-drivers will be given. In the 
 
 When executing an action the device-drivers execute the specified action and determine their new sensitivity-list.
 
-### How is the functionality of device-driver0 implemented
+### How is the functionality of stdin_driver implemented
 
 As specified in the Requirements the functionality of stdin_driver will be to read from stdin. The following code snippet is used:
 
@@ -17,7 +17,7 @@ void execute_action(
     int sensitivity_list[ACTIONS])
 {
 
-    set_sensitivity_list_empty(sensitivity_list);
+    fsm_set_sensitivity_list_empty(sensitivity_list);
 
     switch (action)
     {
@@ -25,9 +25,30 @@ void execute_action(
         action_check_stdin_value(sensitivity_list);
         break;
 
+    case W:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
+    case A:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
+    case S:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
+    case D:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
     default:
         break;
     }
+}
+
+int * action_key(int sensitivity_list[ACTIONS], int action)
+{
+    return sensitivity_list[action];
 }
 
 void action_check_stdin_value(int sensitivity_list[ACTIONS])
@@ -50,18 +71,51 @@ void action_check_stdin_value(int sensitivity_list[ACTIONS])
 }
 ```
 
-### How can the functionality of device-driver1 be implemented
+### How can the functionality of stdout_driver be implemented
 
-As specified in the Requirements the functionality of device-driver1 will be to write to stdout. The following code snippet is used:
+As specified in the Requirements the functionality of stdout_driver will be to write to stdout. The following code snippet is used:
 
 ``` C
+void execute_action(
+        finite_state_machine_t *self,
+        int action,
+        int sensitivity_list[ACTIONS]) {
 
+    switch (action){
+        case FORWARD:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, FORWARD, 'F');
+            break;
+
+        case LEFT:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, LEFT, 'L');
+            break;
+
+        case BACK:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, BACK, 'B');
+            break;
+
+        case RIGHT:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, RIGHT, 'R');
+            break;
+
+        case WRITE_STDOUT:
+            array_copy(sensitivity_list, action_write_stdout(self->sensitivity_list, WRITE_STDOUT);
+        break;
+
+        default:
+            break;
+    }
+}
+
+int * action_direction(int sensitivity_list[ACTIONS], int action, char direction)
+{
+    value_to_write = direction;
+    return sensitivity_list[action];
+}
+
+void action_write_stdout(int sensitivity_list[ACTIONS], int action)
+{
+    printf("%c \n", value_to_write);
+    return sensitivity_list[action];
+}
 ```
-
-| Name | Explanation | Input arguments | Return value |
-|------|-------------|-----------------|--------------|
-| putchar | puts the passed character on the screen and returns the same character | Character to write | Written character |
-| puts | Writes the provided string and a trailing newline to stdout | String to write | Status |
-| printf | writes the output to the stdout and produces the output according to the format provided | Format, List of Format variables to write | Status |
-
-The above commands can be used to write to the stdout and can be used to implemented the second device-driver its behavior.

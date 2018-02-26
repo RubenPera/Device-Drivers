@@ -125,6 +125,7 @@ namespace ReadOutput
             export.Lines.ToList().ForEach(l => Console.WriteLine(l.Display));
 
             output.AppendLine("{");
+
             for (h = 0; h < height; h++)
             {
                 output.Append("{");
@@ -137,6 +138,7 @@ namespace ReadOutput
                     {
                         valueToWrite = lines.First().NextState.ToString();
                     }
+
                     output.Append($"{valueToWrite},");
                 }
                 output.AppendLine("},");
@@ -159,7 +161,7 @@ namespace ReadOutput
         {
             foreach (var action in actions)
             {
-                output.AppendLine($"{action.Key} {action.Value}");
+                output.AppendLine($"#define {action.Key.ToUpper()} {action.Value}");
             }
         }
 

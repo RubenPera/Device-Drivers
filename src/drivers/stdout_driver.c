@@ -1,10 +1,13 @@
 #include "../models/models.h"
 #include "../libraries/libraries.h"
 
+
 void run(finite_state_machine_node_t *self);
 void make_transition(
         finite_state_machine_t *self,
         int action);
+
+char value_to_write = 'w';
 
 void driver1_init() {
     finite_state_machine_node_t *self;
@@ -73,18 +76,41 @@ void execute_action(
         int sensitivity_list[ACTIONS]) {
 
     switch (action){
-        case 0:
-            action_0(sensitivity_list);
+        case FORWARD:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, FORWARD, 'F');
             break;
+        
+        case LEFT:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, LEFT, 'L');
+            break;
+
+        case BACK:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, BACK, 'B');
+            break;
+
+        case RIGHT:
+            array_copy(sensitivity_list, action_direction(self->sensitivity_list, RIGHT, 'R');
+            break;
+
+        case WRITE_STDOUT:
+            array_copy(sensitivity_list, action_write_stdout(self->sensitivity_list, WRITE_STDOUT);
+        break;
 
         default:
             break;
     }
 }
 
-void action_(int sensitivity_list[ACTIONS])
+int * action_direction(int sensitivity_list[ACTIONS], int action, char direction)
 {
+    value_to_write = direction;
+    return sensitivity_list[action];
+}
 
+void action_write_stdout(int sensitivity_list[ACTIONS], int action)
+{
+    printf("%c \n", value_to_write);
+    return sensitivity_list[action];
 }
 
 //int main() {

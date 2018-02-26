@@ -6,7 +6,8 @@ void make_transition(
     finite_state_machine_t *self,
     int action);
 
-const int ALLOWED_KEYS[KEYS] = {'w', 'a', 's', 'd'} const int KEY_ACTIONS[KEYS] = {KEY_W, KEY_A, KEY_S, KEY_D}
+const int ALLOWED_KEYS[KEYS] = {'w', 'a', 's', 'd'};
+const int KEY_ACTIONS[KEYS] = {W , A, S, D};
 
 void
 stdin_driver_init()
@@ -93,9 +94,30 @@ void execute_action(
         action_check_stdin_value(sensitivity_list);
         break;
 
+    case W:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
+    case A:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
+    case S:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
+    case D:
+        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        break;
+
     default:
         break;
     }
+}
+
+int * action_key(int sensitivity_list[ACTIONS], int action)
+{
+    return sensitivity_list[action];
 }
 
 void action_check_stdin_value(int sensitivity_list[ACTIONS])

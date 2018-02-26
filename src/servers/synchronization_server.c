@@ -157,7 +157,6 @@ int synchronization_server_set_derivative(
 void derivatives_make_transition(
     synchronization_server_t *self)
 {
-
     int action = 0;
     int derivatives[DERIVATIVES] = {NO_ACTION};
 
@@ -165,6 +164,8 @@ void derivatives_make_transition(
 
     get_executable_derivatives(self, derivatives, action);
     send_action_to_derivatives(self, derivatives, action);
+
+    printf("Send action %d \n", action);
 }
 
 void get_executable_derivatives(
@@ -189,7 +190,6 @@ void send_action_to_derivatives(
     const int derivatives[DERIVATIVES],
     int action)
 {
-
     int i = 0;
 
     for (i = 0; i < ACTIONS; i++)
@@ -205,7 +205,6 @@ void send_action_to_derivatives(
 int next_action(
     synchronization_server_t *self)
 {
-
     int actions[ACTIONS] = {NO_ACTION};
 
     get_combined_actions(self, actions);

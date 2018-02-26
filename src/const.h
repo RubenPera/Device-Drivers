@@ -19,10 +19,15 @@
 // Actions
 #define CHECK_STDIN_VALUE
 
-
-#define KEY_W
-#define KEY_A
-#define KEY_S
-#define KEY_D
+#define CHECK_STDIN_VALUE 0
+#define W 1
+#define A 2
+#define S 3
+#define D 4
+#define RIGHT 5
+#define WRITE_STDOUT 6
+#define BACK 7
+#define LEFT 8
+#define FORWARD 9
 
 #endif
