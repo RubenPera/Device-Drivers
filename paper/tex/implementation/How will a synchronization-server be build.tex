@@ -1,0 +1,164 @@
+\hypertarget{implementation}{%
+\section{Implementation}\label{implementation}}
+
+\hypertarget{how-will-a-synchronization-server-be-build}{%
+\subsection{How will a synchronization-server be
+build}\label{how-will-a-synchronization-server-be-build}}
+
+In this section the implementation of the synchronization-server will be
+given.
+
+\hypertarget{how-will-the-synchronization-server-save-the-data-of-the-finite-state-machines}{%
+\subsubsection{How will the synchronization-server save the data of the
+finite-state
+machines}\label{how-will-the-synchronization-server-save-the-data-of-the-finite-state-machines}}
+
+For storing the finite-state machine and finite-state machine derivative
+and their attributes structs will be used:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{typedef} \KeywordTok{struct}
+\NormalTok{\{}
+    \DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS];}
+    \DataTypeTok{int}\NormalTok{ alphabet[ACTIONS];}
+    \DataTypeTok{int}\NormalTok{ endpoint;}
+    \DataTypeTok{int}\NormalTok{ index;}
+\NormalTok{\} finite_state_machine_node_derivative_t;}
+
+\KeywordTok{typedef} \KeywordTok{struct}
+\NormalTok{\{}
+    \DataTypeTok{int}\NormalTok{ endpoint;}
+\NormalTok{    finite_state_machine_node_derivative_t *derivatives[DERIVATIVES];}
+\NormalTok{\} synchronization_server_t;}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{how-will-the-synchronization-server-determine-the-next-action-for-the-finite-state-machines}{%
+\subsubsection{How will the synchronization-server determine the next
+action for the finite-state
+machines}\label{how-will-the-synchronization-server-determine-the-next-action-for-the-finite-state-machines}}
+
+For determining the next action that the finite-state machines will
+execute, the following code snippet is used:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ next_action(}
+\NormalTok{    synchronization_server_t *self)}
+\NormalTok{\{}
+
+    \DataTypeTok{int}\NormalTok{ actions[ACTIONS] = \{NO_ACTION\};}
+
+\NormalTok{    get_combined_actions(self, actions);}
+
+\NormalTok{    get_valid_actions(self, actions);}
+
+    \ControlFlowTok{return}\NormalTok{ random_action_from_actions(actions);}
+\NormalTok{\}}
+
+\DataTypeTok{void}\NormalTok{ get_valid_actions(}
+\NormalTok{    synchronization_server_t *self,}
+    \DataTypeTok{int}\NormalTok{ actions[ACTIONS])}
+\NormalTok{\{}
+    \DataTypeTok{int}\NormalTok{ a = }\DecValTok{0}\NormalTok{, d = }\DecValTok{0}\NormalTok{;}
+
+    \DataTypeTok{int}\NormalTok{ actions_to_remove[ACTIONS] = \{HAS_ACTION\};}
+
+    \ControlFlowTok{for}\NormalTok{ (a = }\DecValTok{0}\NormalTok{; a < ACTIONS; a++)}
+\NormalTok{    \{}
+        \ControlFlowTok{for}\NormalTok{ (d = }\DecValTok{0}\NormalTok{; d < DERIVATIVES; d++)}
+\NormalTok{        \{}
+            \ControlFlowTok{if}\NormalTok{ (self->derivatives[d]->alphabet[a] != NO_ACTION &&}
+\NormalTok{                self->derivatives[d]->sensitivity_list[a] == NO_ACTION)}
+\NormalTok{            \{}
+\NormalTok{                actions_to_remove[a] = NO_ACTION;}
+\NormalTok{            \}}
+\NormalTok{        \}}
+\NormalTok{    \}}
+
+    \ControlFlowTok{for}\NormalTok{ (a = }\DecValTok{0}\NormalTok{; a < ACTIONS; a++)}
+\NormalTok{    \{}
+        \ControlFlowTok{if}\NormalTok{ (actions_to_remove[a] == NO_ACTION)}
+\NormalTok{        \{}
+\NormalTok{            actions[a] = NO_ACTION;}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{\}}
+
+\DataTypeTok{void}\NormalTok{ get_combined_actions(}
+\NormalTok{    synchronization_server_t *self,}
+    \DataTypeTok{int}\NormalTok{ combined_actions[ACTIONS])}
+\NormalTok{\{}
+    \DataTypeTok{int}\NormalTok{ d = }\DecValTok{0}\NormalTok{, a = }\DecValTok{0}\NormalTok{;}
+
+    \ControlFlowTok{for}\NormalTok{ (d = }\DecValTok{0}\NormalTok{; d < DERIVATIVES; d++)}
+\NormalTok{    \{}
+        \ControlFlowTok{for}\NormalTok{ (a = }\DecValTok{0}\NormalTok{; a < ACTIONS; a++)}
+\NormalTok{        \{}
+            \ControlFlowTok{if}\NormalTok{ (self->derivatives[d]->sensitivity_list[a] != NO_ACTION &&}
+\NormalTok{                combined_actions[a] == NO_ACTION)}
+\NormalTok{            \{}
+\NormalTok{                combined_actions[a] = HAS_ACTION;}
+\NormalTok{            \}}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{\}}
+
+\DataTypeTok{int}\NormalTok{ random_action_from_actions(}
+    \DataTypeTok{int}\NormalTok{ actions[ACTIONS])}
+\NormalTok{\{}
+    \DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{, selected_action = NO_ACTION;}
+
+    \ControlFlowTok{for}\NormalTok{ (i = rand(); i < ACTIONS; i++)}
+\NormalTok{    \{}
+        \ControlFlowTok{if}\NormalTok{ (actions[i] != NO_ACTION)}
+\NormalTok{        \{}
+\NormalTok{            selected_action = i;}
+            \ControlFlowTok{break}\NormalTok{;}
+\NormalTok{        \}}
+\NormalTok{    \}}
+
+    \ControlFlowTok{return}\NormalTok{ selected_action == NO_ACTION ? random_action_from_actions(actions) : selected_action;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+In \emph{get\_combined\_actions} an array of all the actions is
+determined. In \emph{get\_valid\_actions} the actions that are able to
+be executed by the current derivates is determined. In
+\emph{random\_action\_from\_actions} a random action is chosen from the
+array of actions, this action will be executed.
+
+\hypertarget{how-will-the-synchronization-server-determine-the-finite-state-machines-that-will-execute-an-action}{%
+\subsubsection{How will the synchronization-server determine the
+finite-state machines that will execute an
+action}\label{how-will-the-synchronization-server-determine-the-finite-state-machines-that-will-execute-an-action}}
+
+For determining the derivatives that will execute an action the
+following code snippet is used:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{void}\NormalTok{ get_executable_derivatives(}
+\NormalTok{    synchronization_server_t *self,}
+    \DataTypeTok{int}\NormalTok{ derivatives[DERIVATIVES],}
+    \DataTypeTok{int}\NormalTok{ action)}
+\NormalTok{\{}
+    \DataTypeTok{int}\NormalTok{ d = }\DecValTok{0}\NormalTok{;}
+
+    \ControlFlowTok{for}\NormalTok{ (d = }\DecValTok{0}\NormalTok{; d < DERIVATIVES; d++)}
+\NormalTok{    \{}
+        \ControlFlowTok{if}\NormalTok{ (self->derivatives[d]->alphabet[action] != NO_ACTION &&}
+\NormalTok{            self->derivatives[d]->sensitivity_list[action] != NO_ACTION)}
+\NormalTok{        \{}
+\NormalTok{            derivatives[action] = HAS_ACTION;}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The array of derivatives is iterated and only the derivatives that have
+the action in their alphabet and sensitivity\_list will execute the
+action.

@@ -1,0 +1,134 @@
+\hypertarget{design}{%
+\section{Design}\label{design}}
+
+In this chapter the design of the application will be discussed.
+
+First the class diagram will be discussed, thereafter the sequence
+diagrams illustrating key operations, and lastly the LTS model for the
+application that will be build in this paper.
+
+\hypertarget{class-diagram}{%
+\subsection{Class-diagram}\label{class-diagram}}
+
+\begin{figure}
+\centering
+\includegraphics{/diagrams/class_diagram.png}
+\caption{Class diagram}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  FiniteStateMachine, implementation of the finite-state machine
+\item
+  FiniteStateMachineNode, implementation of the finite-state machine
+  that can communicate with the synchronization-server
+\item
+  FiniteStateMachineNodeStatus, container used for sending the status of
+  a finite-state machine to the synchronization-server
+\item
+  FiniteStateMachineNodeDerivative, container used for storing
+  finite-state machine data by the synchronization-server
+\item
+  SynchronizationServer, implementation of the synchronization-server
+  that can communicate with the finite-state machines
+\end{itemize}
+
+\hypertarget{sequence-diagrams}{%
+\subsubsection{Sequence-diagrams:}\label{sequence-diagrams}}
+
+Two sequence-diagrams will illustrate:
+
+\begin{itemize}
+\tightlist
+\item
+  How will processes announce their presence to the
+  synchronization-server?
+\item
+  How will the processes be synchronized by the synchronization-server?
+\end{itemize}
+
+\hypertarget{how-will-processes-announce-their-presence-to-the-synchronization-server}{%
+\subsubsection{How will processes announce their presence to the
+synchronization-server}\label{how-will-processes-announce-their-presence-to-the-synchronization-server}}
+
+\begin{figure}
+\centering
+\includegraphics{/diagrams/sequence_announce.png}
+\caption{alt}
+\end{figure}
+
+\hypertarget{how-will-the-processes-be-synchronized-by-the-synchronization-server}{%
+\subsubsection{How will the processes be synchronized by the
+synchronization-server}\label{how-will-the-processes-be-synchronized-by-the-synchronization-server}}
+
+\begin{figure}
+\centering
+\includegraphics{/diagrams/sequence_synchronization.png}
+\caption{alt}
+\end{figure}
+
+\hypertarget{concurrent-model}{%
+\subsection{Concurrent model}\label{concurrent-model}}
+
+In this paper the goal is not to implement an advanced concurrent model,
+the aim is to implement FSP based design in Minix, therefore a simple
+FSP and LTS model is used.
+
+The aim of this concurrent model is to control a simulated car, the
+input is read from stdin, the corresponding direction is determined and
+written to stdout.
+
+\hypertarget{fsp-model}{%
+\subsubsection{FSP model}\label{fsp-model}}
+
+THe FSP model is as following:
+
+\begin{verbatim}
+set Keys = {w, a, s, d}
+set Directions = {forward, left, back, right} 
+
+                // Drivers
+STDIN_DRIVER = (check_stdin_value -> Keys -> STDIN_DRIVER).
+STDOUT_DRIVER = (Directions -> write_stdout -> STDOUT_DRIVER).
+
+
+                // Thread
+CONTROLLER = (w -> forward -> CONTROLLER 
+                    | a -> left -> CONTROLLER 
+                    | s -> back -> CONTROLLER
+                    | d -> right -> CONTROLLER).
+
+||DRIVERS = (STDIN_DRIVER || STDOUT_DRIVER).
+
+||THREADS = (CONTROLLER).
+
+||COMBINED = (DRIVERS || THREADS).
+\end{verbatim}
+
+\hypertarget{explanation}{%
+\paragraph{Explanation}\label{explanation}}
+
+The Explanation for each of the FSP elements:
+
+\begin{itemize}
+\tightlist
+\item
+  STDIN\_DRIVER, reads from stdin the values that are withing the Keys
+  set.
+\item
+  STDOUT\_DRIVER, writes values from the Direction set to the stdout.
+\item
+  CONTROLLER, maps the values from the Keys set to the Directions set.
+\end{itemize}
+
+\hypertarget{lts-model}{%
+\subsubsection{LTS Model}\label{lts-model}}
+
+The LTS models is as following:
+
+\begin{figure}
+\centering
+\includegraphics{/diagrams/lts.png}
+\caption{alt}
+\end{figure}

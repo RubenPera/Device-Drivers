@@ -1,0 +1,129 @@
+\hypertarget{research-questions}{%
+\section{Research Questions}\label{research-questions}}
+
+In this chapter the research questions and the underlying sub-questions
+will defined.
+
+\hypertarget{research-question}{%
+\subsection{Research question}\label{research-question}}
+
+This paper has as aim to design and implement a generic synchronization
+server. This leads to the following research question:
+
+\begin{itemize}
+\tightlist
+\item
+  How can a synchronization server be build that synchronizes an
+  unbeknownst number of threads, where every thread is based on a
+  design.
+\end{itemize}
+
+\hypertarget{sub-questions}{%
+\subsection{Sub-questions}\label{sub-questions}}
+
+This research question is divided into sub-questions:
+
+\begin{itemize}
+\tightlist
+\item
+  What different FSP elements will be used in this paper?
+\item
+  How will the communication between processes take place under Minix?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    What are messages and how can they be used to communicate between
+    processes under Minix?
+
+    \begin{itemize}
+    \tightlist
+    \item
+      What are messages in Minix?
+    \item
+      What is an endpoint and how can it be determined under Minix?
+    \item
+      How can messages be send and received under Minix?
+    \end{itemize}
+  \item
+    How can memory be shared between processes under Minix?
+
+    \begin{itemize}
+    \tightlist
+    \item
+      What is a memory grant under Minix?
+    \item
+      How can memory grants be used to share data under Minix?
+    \end{itemize}
+  \end{itemize}
+\item
+  How will a finite-state machine be build?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How will a finite-state machine save its transition-table,
+    sensitivity-list and alphabet?
+
+    \begin{itemize}
+    \tightlist
+    \item
+      How will a finite-state machine save its transition-table?
+    \item
+      How will a finite-state machine save its sensitivity-list?
+    \item
+      How will a finite-state machine save its alphabet?
+    \end{itemize}
+  \item
+    How will a finite-state machine determine its sensitivity-list and
+    alphabet?
+
+    \begin{itemize}
+    \tightlist
+    \item
+      How will a finite-state machine determine its sensitivity-list?
+    \item
+      How will a finite-state machine determine its alphabet?
+    \end{itemize}
+  \item
+    How will a finite-state machine make transitions?
+  \end{itemize}
+\item
+  How will a synchronization-server be build?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How will the synchronization-server save the data of the
+    finite-state machines?
+  \item
+    How will the synchronization-server determine the next action for
+    the finite-state machines?
+  \item
+    How will the synchronization-server determine the finite-state
+    machines that will execute an action?
+  \end{itemize}
+\item
+  How will the communication between a finite-state machine and the
+  synchronization-server take place?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How will a finite-state machine send their status to the
+    synchronization-server?
+  \item
+    How will the synchronization-server send an action to a finite-state
+    machine?
+  \end{itemize}
+\item
+  What will be the functionality of the device-drivers be implemented?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How can the functionality of device-driver0 be implemented?
+  \item
+    How can the functionality of device-driver1 be implemented?
+  \end{itemize}
+\end{itemize}

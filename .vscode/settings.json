@@ -14,5 +14,6 @@
     "[markdown]": {
         "editor.wordWrap": "on",
         "editor.quickSuggestions": true,
-    }
+    },
+    "python.pythonPath": "C:\\Python36\\python.exe"
 }

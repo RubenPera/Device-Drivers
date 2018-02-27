@@ -1,0 +1,61 @@
+\hypertarget{requirements}{%
+\section{Requirements}\label{requirements}}
+
+The Requirements will be discussed using the MoSCoW method.
+
+\begin{itemize}
+\tightlist
+\item
+  Must have:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Synchronize server:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Synchronize an unknown amount of processes
+    \item
+      Receive an announcement from a process and from then on
+      synchronize this process.
+    \end{itemize}
+  \item
+    Processes:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Follow from a FSP design
+    \item
+      Announce their presence to the synchronization-server
+    \item
+      Be synchronized by the synchronization-server
+    \end{itemize}
+  \end{itemize}
+\item
+  Should have:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Device-drivers:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Device-driver0, read from stdin
+    \item
+      Device-driver1, write to stdout
+    \end{itemize}
+  \item
+    thread:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Control the device-drivers based upon its synchronisable actions
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
