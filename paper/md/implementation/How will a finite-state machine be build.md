@@ -8,7 +8,7 @@ In this section the implementation of the finite-state machine will be given.
 
 For storing the finite-state machine and its attributes a struct will be used:
 
-``` C
+~~~ C
 typedef struct
 {
     int transition_table[STATES][ACTIONS];
@@ -17,7 +17,7 @@ typedef struct
     int cur_state;
 
 } finite_state_machine_t;
-```
+~~~
 
 STATES are the total amount of states and ACTIONS are the total amount of actions. As C does not support arrays of undetermined sizes, the total amount of states and actions must be known during compilation, these and other constant values are stored in one shared constant file.
 

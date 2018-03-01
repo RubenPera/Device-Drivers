@@ -1,5 +1,5 @@
 \hypertarget{design}{%
-\section{Design}\label{design}}
+\chapter{Design}\label{design}}
 
 In this chapter the design of the application will be discussed.
 
@@ -8,7 +8,7 @@ diagrams illustrating key operations, and lastly the LTS model for the
 application that will be build in this paper.
 
 \hypertarget{class-diagram}{%
-\subsection{Class-diagram}\label{class-diagram}}
+\section{Class-diagram}\label{class-diagram}}
 
 \begin{figure}
 \centering
@@ -35,7 +35,7 @@ application that will be build in this paper.
 \end{itemize}
 
 \hypertarget{sequence-diagrams}{%
-\subsubsection{Sequence-diagrams:}\label{sequence-diagrams}}
+\subsection{Sequence-diagrams:}\label{sequence-diagrams}}
 
 Two sequence-diagrams will illustrate:
 
@@ -49,7 +49,7 @@ Two sequence-diagrams will illustrate:
 \end{itemize}
 
 \hypertarget{how-will-processes-announce-their-presence-to-the-synchronization-server}{%
-\subsubsection{How will processes announce their presence to the
+\subsection{How will processes announce their presence to the
 synchronization-server}\label{how-will-processes-announce-their-presence-to-the-synchronization-server}}
 
 \begin{figure}
@@ -59,7 +59,7 @@ synchronization-server}\label{how-will-processes-announce-their-presence-to-the-
 \end{figure}
 
 \hypertarget{how-will-the-processes-be-synchronized-by-the-synchronization-server}{%
-\subsubsection{How will the processes be synchronized by the
+\subsection{How will the processes be synchronized by the
 synchronization-server}\label{how-will-the-processes-be-synchronized-by-the-synchronization-server}}
 
 \begin{figure}
@@ -69,7 +69,7 @@ synchronization-server}\label{how-will-the-processes-be-synchronized-by-the-sync
 \end{figure}
 
 \hypertarget{concurrent-model}{%
-\subsection{Concurrent model}\label{concurrent-model}}
+\section{Concurrent model}\label{concurrent-model}}
 
 In this paper the goal is not to implement an advanced concurrent model,
 the aim is to implement FSP based design in Minix, therefore a simple
@@ -80,7 +80,7 @@ input is read from stdin, the corresponding direction is determined and
 written to stdout.
 
 \hypertarget{fsp-model}{%
-\subsubsection{FSP model}\label{fsp-model}}
+\subsection{FSP model}\label{fsp-model}}
 
 THe FSP model is as following:
 
@@ -107,7 +107,7 @@ CONTROLLER = (w -> forward -> CONTROLLER
 \end{verbatim}
 
 \hypertarget{explanation}{%
-\paragraph{Explanation}\label{explanation}}
+\subsubsection{Explanation}\label{explanation}}
 
 The Explanation for each of the FSP elements:
 
@@ -123,7 +123,7 @@ The Explanation for each of the FSP elements:
 \end{itemize}
 
 \hypertarget{lts-model}{%
-\subsubsection{LTS Model}\label{lts-model}}
+\subsection{LTS Model}\label{lts-model}}
 
 The LTS models is as following:
 

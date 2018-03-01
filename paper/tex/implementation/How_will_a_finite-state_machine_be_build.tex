@@ -1,16 +1,16 @@
 \hypertarget{implementation}{%
-\section{Implementation}\label{implementation}}
+\chapter{Implementation}\label{implementation}}
 
 \hypertarget{how-will-a-finite-state-machine-be-build}{%
-\subsection{How will a finite-state machine be
+\section{How will a finite-state machine be
 build}\label{how-will-a-finite-state-machine-be-build}}
 
 In this section the implementation of the finite-state machine will be
 given.
 
 \hypertarget{how-will-a-finite-state-machine-save-its-transition-table-sensitivity-list-and-alphabet}{%
-\subsubsection{How will a finite-state machine save its
-transition-table, sensitivity-list and
+\subsection{How will a finite-state machine save its transition-table,
+sensitivity-list and
 alphabet}\label{how-will-a-finite-state-machine-save-its-transition-table-sensitivity-list-and-alphabet}}
 
 For storing the finite-state machine and its attributes a struct will be
@@ -35,7 +35,7 @@ total amount of states and actions must be known during compilation,
 these and other constant values are stored in one shared constant file.
 
 \hypertarget{how-will-a-finite-state-machine-determine-its-sensitivity-list-and-alphabet}{%
-\subsubsection{How will a finite-state machine determine its
+\subsection{How will a finite-state machine determine its
 sensitivity-list and
 alphabet}\label{how-will-a-finite-state-machine-determine-its-sensitivity-list-and-alphabet}}
 
@@ -43,7 +43,7 @@ In this section the implementation of determining the sensitivity-list
 and alphabet will be provided.
 
 \hypertarget{how-will-a-finite-state-machine-determine-its-sensitivity-list}{%
-\paragraph{How will a finite-state machine determine its
+\subsubsection{How will a finite-state machine determine its
 sensitivity-list}\label{how-will-a-finite-state-machine-determine-its-sensitivity-list}}
 
 For determining the finite-state machine its sensitivity-list the
@@ -64,7 +64,7 @@ The used function array\_copy copies the values of one array to the
 other array and will be included in the appendix.
 
 \hypertarget{how-will-a-finite-state-machine-determine-its-alphabet}{%
-\paragraph{How will a finite-state machine determine its
+\subsubsection{How will a finite-state machine determine its
 alphabet}\label{how-will-a-finite-state-machine-determine-its-alphabet}}
 
 For determining the finite-state machine its alphabet the following code
@@ -93,7 +93,7 @@ snippet is used:
 \end{Shaded}
 
 \hypertarget{how-will-a-finite-state-machine-make-transitions}{%
-\subsubsection{How will a finite-state machine make
+\subsection{How will a finite-state machine make
 transitions}\label{how-will-a-finite-state-machine-make-transitions}}
 
 For making transitions the finite-state machine uses the following code
