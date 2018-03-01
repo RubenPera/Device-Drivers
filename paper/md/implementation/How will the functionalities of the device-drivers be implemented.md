@@ -1,6 +1,6 @@
-# Research
+<!-- # Research -->
 
-## What can the functionality of the device-drivers be implemented
+## How will the functionality of the device-drivers be implemented
 
 In this section the implemented of the two device-drivers will be given. In the FSP model the name stdin_driver was used for device-driver0 and stdout_driver for device-driver1, these names will also be used in this paper.
 
@@ -10,7 +10,7 @@ When executing an action the device-drivers execute the specified action and det
 
 As specified in the Requirements the functionality of stdin_driver will be to read from stdin. The following code snippet is used:
 
-``` C
+```{.c}
 void execute_action(
     finite_state_machine_t *self,
     int action,
@@ -26,19 +26,27 @@ void execute_action(
         break;
 
     case W:
-        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
         break;
 
     case A:
-        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
         break;
 
     case S:
-        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
         break;
 
     case D:
-        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
         break;
 
     default:
@@ -75,7 +83,7 @@ void action_check_stdin_value(int sensitivity_list[ACTIONS])
 
 As specified in the Requirements the functionality of stdout_driver will be to write to stdout. The following code snippet is used:
 
-``` C
+```{.c}
 void execute_action(
         finite_state_machine_t *self,
         int action,
@@ -83,23 +91,33 @@ void execute_action(
 
     switch (action){
         case FORWARD:
-            array_copy(sensitivity_list, action_direction(self->sensitivity_list, FORWARD, 'F');
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, FORWARD, 'F');
             break;
 
         case LEFT:
-            array_copy(sensitivity_list, action_direction(self->sensitivity_list, LEFT, 'L');
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, LEFT, 'L');
             break;
 
         case BACK:
-            array_copy(sensitivity_list, action_direction(self->sensitivity_list, BACK, 'B');
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, BACK, 'B');
             break;
 
         case RIGHT:
-            array_copy(sensitivity_list, action_direction(self->sensitivity_list, RIGHT, 'R');
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, RIGHT, 'R');
             break;
 
         case WRITE_STDOUT:
-            array_copy(sensitivity_list, action_write_stdout(self->sensitivity_list, WRITE_STDOUT);
+            array_copy(
+                sensitivity_list, 
+                action_write_stdout(self->sensitivity_list, WRITE_STDOUT);
         break;
 
         default:

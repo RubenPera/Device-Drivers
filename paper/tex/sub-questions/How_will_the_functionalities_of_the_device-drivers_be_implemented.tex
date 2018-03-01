@@ -1,122 +1,59 @@
-\hypertarget{research}{%
-\chapter{Research}\label{research}}
+\hypertarget{how-will-the-functionality-of-the-device-drivers-be-implemented}{%
+\section{How will the functionality of the device-drivers be
+implemented}\label{how-will-the-functionality-of-the-device-drivers-be-implemented}}
 
-\hypertarget{what-can-the-functionality-of-the-device-drivers-be-implemented}{%
-\section{What can the functionality of the device-drivers be
-implemented}\label{what-can-the-functionality-of-the-device-drivers-be-implemented}}
-
-\hypertarget{how-can-the-functionality-of-device-driver0-be-implemented}{%
-\subsection{How can the functionality of device-driver0 be
-implemented}\label{how-can-the-functionality-of-device-driver0-be-implemented}}
+\hypertarget{how-will-the-functionality-of-device-driver0-be-implemented}{%
+\subsection{How will the functionality of device-driver0 be
+implemented}\label{how-will-the-functionality-of-device-driver0-be-implemented}}
 
 As specified in the Requirements the functionality of device-driver0
 will be to continuously read from stdin.\\
 As the application that will be build in this paper will be build with
 C, for reading the stdin the basic commands are:
 
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-\begin{minipage}[b]{0.11\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.23\columnwidth}\raggedright
-Explanation\strut
-\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
-Input arguments\strut
-\end{minipage} & \begin{minipage}[b]{0.25\columnwidth}\raggedright
-Return value\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-getchar\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Reads the next available character from stdin and returns it as an
-integer\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-None\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Read character\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-gets\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Reads the next line from stdin and places this into the provided Read
-line parameter\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Read line\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-scanf\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Reads the input from the standard input stream stdin and scans that
-input according to the format provided\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Format, List of Format variables , Value to put the read value
-into\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation ; Input arguments ; Return value
+\item
+  getchar ; Reads the next available character from stdin and returns it
+  as an integer ; None ; Read character
+\item
+  gets ; Reads the next line from stdin and places this into the
+  provided Read line parameter ; Read line ; Status
+\item
+  scanf ; Reads the input from the standard input stream stdin and scans
+  that input according to the format provided ; Format, List of Format
+  variables , Value to put the read value into ; Status
+\end{itemize}
 
-When combining the above commands with a loop the behavior of the first
-device-driver can be implemented.
+Using the above commands the behavior of the first device-driver can be
+implemented.
 
-\hypertarget{how-can-the-functionality-of-device-driver1-be-implemented}{%
-\subsection{How can the functionality of device-driver1 be
-implemented}\label{how-can-the-functionality-of-device-driver1-be-implemented}}
+\hypertarget{how-will-the-functionality-of-device-driver1-be-implemented}{%
+\subsection{How will the functionality of device-driver1 be
+implemented}\label{how-will-the-functionality-of-device-driver1-be-implemented}}
 
 As specified in the Requirements the functionality of device-driver1
 will be to write to stdout.\\
 As the application that will be build in this paper will be build with
 C, for writing to stdout the basic commands are:
 
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-\begin{minipage}[b]{0.11\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.23\columnwidth}\raggedright
-Explanation\strut
-\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
-Input arguments\strut
-\end{minipage} & \begin{minipage}[b]{0.25\columnwidth}\raggedright
-Return value\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-putchar\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-puts the passed character on the screen and returns the same
-character\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Character to write\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Written character\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-puts\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Writes the provided string and a trailing newline to stdout\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-String to write\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-printf\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-writes the output to the stdout and produces the output according to the
-format provided\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Format, List of Format variables to write\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation ; Input arguments ; Return value
+\item
+  putchar ; puts the passed character on the screen and returns the same
+  character ; Character to write ; Written character
+\item
+  puts ; Writes the provided string and a trailing newline to stdout ;
+  String to write ; Status
+\item
+  printf ; writes the output to the stdout and produces the output
+  according to the format provided ; Format, List of Format variables to
+  write ; Status
+\end{itemize}
 
-The above commands can be used to write to the stdout and can be used to
-implemented the second device-driver its behavior.
+Using the above commands the behavior of the second device-driver can be
+implemented.

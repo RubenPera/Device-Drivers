@@ -1,5 +1,5 @@
 
-# Research
+<!-- # Research -->
 
 ## How will a synchronization-server be build
 
@@ -8,7 +8,8 @@ In this sub-chapter will be explained how a synchronization-server will be build
 ### How will the synchronization-server save the data of the finite-state machines
 
 A synchronization-server will hold the finite-state machine data in a new container, this container will be called finite-state machine derivative, or derivative in short.  
-This derivative will contain the necessary information the synchronization-server needs to determine the next action that will be executed by the system.  
+This derivative will contain the necessary information the synchronization-server needs to determine the next action that will be executed by the system.
+
 This information will be:
 
 - Sensitivity-list, the sensitivity-list of the finite-state machine
@@ -18,12 +19,12 @@ This information will be:
 
 This information is enough for the synchronization-server to determine the next action.
 
-These derivatives will be stored in an array, an array is used because when using indexes it has a $O (1)$ lookup time.
+These derivatives will be stored in an array, an array is used because when using indexes it has a $O(1)$ lookup time.
 
 ### How will the synchronization-server determine the next action for the finite-state machines
 
 For an action to be eligible for execution the following must be true:  
-When an action is present in a finite-state machine his alphabet its must also be present in the finite-state machine his sensitivity-list. This is true for every finite-state machine controlled by the synchronization-server.
+When an action is present in a finite-state machine its alphabet it must also be present in the finite-state machine its sensitivity-list. This is true for every finite-state machine controlled by the synchronization-server.
 
 This means that when one or more finite-state machines have an action in their alphabet but not their sensitivity-list this action cannot be executed.
 
@@ -31,7 +32,7 @@ The following steps will be taken to determine which action can be executed:
 
 - A set will be filled with every action that is currently present in the sensitivity-lists.
 - A new set will be filled with every action that cannot be executed.
-- The second set, containing the actions that cannot be executed, will be subtracted from the first set, all currently present actions.
+- The second set, containing the actions that cannot be executed, will be subtracted from the first set.
 - The result set will contain only the actions that can currently be executed.
 - A random action will be chosen from the remaining set, this will be the action that will be executed.
 

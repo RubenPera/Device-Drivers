@@ -1,9 +1,6 @@
-\hypertarget{research}{%
-\chapter{Research}\label{research}}
-
-\hypertarget{what-can-the-functionality-of-the-device-drivers-be-implemented}{%
-\section{What can the functionality of the device-drivers be
-implemented}\label{what-can-the-functionality-of-the-device-drivers-be-implemented}}
+\hypertarget{how-will-the-functionality-of-the-device-drivers-be-implemented}{%
+\section{How will the functionality of the device-drivers be
+implemented}\label{how-will-the-functionality-of-the-device-drivers-be-implemented}}
 
 In this section the implemented of the two device-drivers will be given.
 In the FSP model the name stdin\_driver was used for device-driver0 and
@@ -20,68 +17,74 @@ implemented}\label{how-is-the-functionality-of-stdin_driver-implemented}}
 As specified in the Requirements the functionality of stdin\_driver will
 be to read from stdin. The following code snippet is used:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ execute_action(}
-\NormalTok{    finite_state_machine_t *self,}
-    \DataTypeTok{int}\NormalTok{ action,}
-    \DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS])}
-\NormalTok{\{}
+\begin{verbatim}
+void execute_action(
+    finite_state_machine_t *self,
+    int action,
+    int sensitivity_list[ACTIONS])
+{
 
-\NormalTok{    fsm_set_sensitivity_list_empty(sensitivity_list);}
+    fsm_set_sensitivity_list_empty(sensitivity_list);
 
-    \ControlFlowTok{switch}\NormalTok{ (action)}
-\NormalTok{    \{}
-    \ControlFlowTok{case}\NormalTok{ CHECK_STDIN_VALUE:}
-\NormalTok{        action_check_stdin_value(sensitivity_list);}
-        \ControlFlowTok{break}\NormalTok{;}
+    switch (action)
+    {
+    case CHECK_STDIN_VALUE:
+        action_check_stdin_value(sensitivity_list);
+        break;
 
-    \ControlFlowTok{case}\NormalTok{ W:}
-\NormalTok{        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));}
-        \ControlFlowTok{break}\NormalTok{;}
+    case W:
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
+        break;
 
-    \ControlFlowTok{case}\NormalTok{ A:}
-\NormalTok{        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));}
-        \ControlFlowTok{break}\NormalTok{;}
+    case A:
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
+        break;
 
-    \ControlFlowTok{case}\NormalTok{ S:}
-\NormalTok{        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));}
-        \ControlFlowTok{break}\NormalTok{;}
+    case S:
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
+        break;
 
-    \ControlFlowTok{case}\NormalTok{ D:}
-\NormalTok{        array_copy(sensitivity_list, action_key(self->sensitivity_list, action));}
-        \ControlFlowTok{break}\NormalTok{;}
+    case D:
+        array_copy(
+            sensitivity_list, 
+            action_key(self->sensitivity_list, action));
+        break;
 
-    \ControlFlowTok{default}\NormalTok{:}
-        \ControlFlowTok{break}\NormalTok{;}
-\NormalTok{    \}}
-\NormalTok{\}}
+    default:
+        break;
+    }
+}
 
-\DataTypeTok{int}\NormalTok{ * action_key(}\DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS], }\DataTypeTok{int}\NormalTok{ action)}
-\NormalTok{\{}
-    \ControlFlowTok{return}\NormalTok{ sensitivity_list[action];}
-\NormalTok{\}}
+int * action_key(int sensitivity_list[ACTIONS], int action)
+{
+    return sensitivity_list[action];
+}
 
-\DataTypeTok{void}\NormalTok{ action_check_stdin_value(}\DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS])}
-\NormalTok{\{}
-    \DataTypeTok{int}\NormalTok{ key = KEY_S;}
-    \DataTypeTok{int}\NormalTok{ input = }\DecValTok{0}\NormalTok{;}
-    \DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{;}
+void action_check_stdin_value(int sensitivity_list[ACTIONS])
+{
+    int key = KEY_S;
+    int input = 0;
+    int i = 0;
 
-\NormalTok{    input = getchar();}
+    input = getchar();
 
-    \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{0}\NormalTok{; i < KEYS; i++)}
-\NormalTok{    \{}
-        \ControlFlowTok{if}\NormalTok{ (input == ALLOWED_KEYS[i])}
-\NormalTok{        \{}
-\NormalTok{            key = KEY_ACTIONS[i];}
-\NormalTok{        \}}
-\NormalTok{    \}}
+    for (i = 0; i < KEYS; i++)
+    {
+        if (input == ALLOWED_KEYS[i])
+        {
+            key = KEY_ACTIONS[i];
+        }
+    }
 
-\NormalTok{    sensitivity_list[key] = HAS_ACTION;}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+    sensitivity_list[key] = HAS_ACTION;
+}
+\end{verbatim}
 
 \hypertarget{how-can-the-functionality-of-stdout_driver-be-implemented}{%
 \subsection{How can the functionality of stdout\_driver be
@@ -90,50 +93,57 @@ implemented}\label{how-can-the-functionality-of-stdout_driver-be-implemented}}
 As specified in the Requirements the functionality of stdout\_driver
 will be to write to stdout. The following code snippet is used:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ execute_action(}
-\NormalTok{        finite_state_machine_t *self,}
-        \DataTypeTok{int}\NormalTok{ action,}
-        \DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS]) \{}
+\begin{verbatim}
+void execute_action(
+        finite_state_machine_t *self,
+        int action,
+        int sensitivity_list[ACTIONS]) {
 
-    \ControlFlowTok{switch}\NormalTok{ (action)\{}
-        \ControlFlowTok{case}\NormalTok{ FORWARD:}
-\NormalTok{            array_copy(sensitivity_list, action_direction(self->sensitivity_list, FORWARD, }\CharTok{'F'}\NormalTok{);}
-            \ControlFlowTok{break}\NormalTok{;}
+    switch (action){
+        case FORWARD:
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, FORWARD, 'F');
+            break;
 
-        \ControlFlowTok{case}\NormalTok{ LEFT:}
-\NormalTok{            array_copy(sensitivity_list, action_direction(self->sensitivity_list, LEFT, }\CharTok{'L'}\NormalTok{);}
-            \ControlFlowTok{break}\NormalTok{;}
+        case LEFT:
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, LEFT, 'L');
+            break;
 
-        \ControlFlowTok{case}\NormalTok{ BACK:}
-\NormalTok{            array_copy(sensitivity_list, action_direction(self->sensitivity_list, BACK, }\CharTok{'B'}\NormalTok{);}
-            \ControlFlowTok{break}\NormalTok{;}
+        case BACK:
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, BACK, 'B');
+            break;
 
-        \ControlFlowTok{case}\NormalTok{ RIGHT:}
-\NormalTok{            array_copy(sensitivity_list, action_direction(self->sensitivity_list, RIGHT, }\CharTok{'R'}\NormalTok{);}
-            \ControlFlowTok{break}\NormalTok{;}
+        case RIGHT:
+            array_copy(
+                sensitivity_list, 
+                action_direction(self->sensitivity_list, RIGHT, 'R');
+            break;
 
-        \ControlFlowTok{case}\NormalTok{ WRITE_STDOUT:}
-\NormalTok{            array_copy(sensitivity_list, action_write_stdout(self->sensitivity_list, WRITE_STDOUT);}
-        \ControlFlowTok{break}\NormalTok{;}
+        case WRITE_STDOUT:
+            array_copy(
+                sensitivity_list, 
+                action_write_stdout(self->sensitivity_list, WRITE_STDOUT);
+        break;
 
-        \ControlFlowTok{default}\NormalTok{:}
-            \ControlFlowTok{break}\NormalTok{;}
-\NormalTok{    \}}
-\NormalTok{\}}
+        default:
+            break;
+    }
+}
 
-\DataTypeTok{int}\NormalTok{ * action_direction(}\DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS], }\DataTypeTok{int}\NormalTok{ action, }\DataTypeTok{char}\NormalTok{ direction)}
-\NormalTok{\{}
-\NormalTok{    value_to_write = direction;}
-    \ControlFlowTok{return}\NormalTok{ sensitivity_list[action];}
-\NormalTok{\}}
+int * action_direction(int sensitivity_list[ACTIONS], int action, char direction)
+{
+    value_to_write = direction;
+    return sensitivity_list[action];
+}
 
-\DataTypeTok{void}\NormalTok{ action_write_stdout(}\DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS], }\DataTypeTok{int}\NormalTok{ action)}
-\NormalTok{\{}
-\NormalTok{    printf(}\StringTok{"%c }\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, value_to_write);}
-    \ControlFlowTok{return}\NormalTok{ sensitivity_list[action];}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
+void action_write_stdout(int sensitivity_list[ACTIONS], int action)
+{
+    printf("%c \n", value_to_write);
+    return sensitivity_list[action];
+}
+\end{verbatim}

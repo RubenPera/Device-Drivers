@@ -1,4 +1,4 @@
-# Implementation
+<!-- # Implementation -->
 
 ## How will the communication between a finite-state machine and the synchronization-server take place
 
@@ -12,7 +12,7 @@ In this section the implementation of the finite-state machine sending its statu
 
 For storing the finite-state machine status and its attributes a struct will be used:
 
-``` C
+```{.c}
 typedef struct
 {
     int endpoint;
@@ -27,7 +27,7 @@ typedef struct
 
 The finite-state machine node will use the following code snippet for sending its finite-state machine node status to the synchronization-server.
 
-``` C
+```{.c}
 void node_send_status(finite_state_machine_node_t *self)
 {
     finite_state_machine_node_status_t *status;
@@ -46,7 +46,7 @@ The send_grant_and_block is an abstraction method written for creating and sendi
 
 The synchronization-server will use the following code snippet for receiving a finite-state machine node status.
 
-``` C
+```{.c}
 void synchronization_server_receive_status(
     synchronization_server_t *self)
 {
@@ -74,7 +74,7 @@ void synchronization_server_receive_status(
 
 The synchronization-server uses the following code snippet for sending the determined action to the derivatives.
 
-``` C
+```{.c}
 void send_action_to_derivatives(synchronization_server_t *self,
     int derivatives[DERIVATIVES),
     int action )
@@ -85,7 +85,9 @@ void send_action_to_derivatives(synchronization_server_t *self,
     {
         if (derivatives[i] != NO_ACTION)
         {
-            derivative_send_action(self->derivatives[i], self->endpoint, action);
+            derivative_send_action(
+                self->derivatives[i], 
+                self->endpoint, action);
         }
     }
 }
@@ -101,7 +103,7 @@ void derivative_send_action(
 
 The finite-state machine node uses the following code snippet for receiving the action.
 
-``` C
+```{.c}
 void driver_receive_action(
     finite_state_machine_node_t *self)
 {

@@ -1,6 +1,3 @@
-\hypertarget{research}{%
-\chapter{Research}\label{research}}
-
 \hypertarget{how-will-a-synchronization-server-be-build}{%
 \section{How will a synchronization-server be
 build}\label{how-will-a-synchronization-server-be-build}}
@@ -18,7 +15,8 @@ new container, this container will be called finite-state machine
 derivative, or derivative in short.\\
 This derivative will contain the necessary information the
 synchronization-server needs to determine the next action that will be
-executed by the system.\\
+executed by the system.
+
 This information will be:
 
 \begin{itemize}
@@ -37,7 +35,7 @@ This information is enough for the synchronization-server to determine
 the next action.
 
 These derivatives will be stored in an array, an array is used because
-when using indexes it has a \(O (1)\) lookup time.
+when using indexes it has a \$O(1)\$ lookup time.
 
 \hypertarget{how-will-the-synchronization-server-determine-the-next-action-for-the-finite-state-machines}{%
 \subsection{How will the synchronization-server determine the next
@@ -45,9 +43,9 @@ action for the finite-state
 machines}\label{how-will-the-synchronization-server-determine-the-next-action-for-the-finite-state-machines}}
 
 For an action to be eligible for execution the following must be true:\\
-When an action is present in a finite-state machine his alphabet its
-must also be present in the finite-state machine his sensitivity-list.
-This is true for every finite-state machine controlled by the
+When an action is present in a finite-state machine its alphabet it must
+also be present in the finite-state machine its sensitivity-list. This
+is true for every finite-state machine controlled by the
 synchronization-server.
 
 This means that when one or more finite-state machines have an action in
@@ -66,7 +64,7 @@ executed:
   A new set will be filled with every action that cannot be executed.
 \item
   The second set, containing the actions that cannot be executed, will
-  be subtracted from the first set, all currently present actions.
+  be subtracted from the first set.
 \item
   The result set will contain only the actions that can currently be
   executed.

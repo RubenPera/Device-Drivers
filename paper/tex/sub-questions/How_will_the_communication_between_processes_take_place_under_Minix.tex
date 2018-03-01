@@ -1,6 +1,3 @@
-\hypertarget{research}{%
-\chapter{Research}\label{research}}
-
 \hypertarget{how-will-the-communication-between-processes-take-place-under-minix}{%
 \section{How will the communication between processes take place under
 Minix}\label{how-will-the-communication-between-processes-take-place-under-minix}}
@@ -24,17 +21,17 @@ Minix uses their own message type as payload for sending and receiving
 messages. A message are a fixed length of 64 bytes of data, they are
 composed of:
 
-\begin{longtable}[]{@{}ll@{}}
-\toprule
-Name & Explanation\tabularnewline
-\midrule
-\endhead
-Endpoint sender & 4-byte identifier of who sent the
-message\tabularnewline
-Message type & 4-byte message type identifier\tabularnewline
-Payload & 56 bytes of data\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation
+\item
+  Endpoint sender ; 4-byte identifier of who sent the message
+\item
+  Message type ; 4-byte message type identifier
+\item
+  Payload ; 56 bytes of data
+\end{itemize}
 
 To give further explanation about the message type, each message type
 has a different structure of its data.
@@ -57,82 +54,42 @@ delivering messages to a process which happened to share the same
 process slot than a unrelated predecessor.
 \end{quote}
 
+//TODO add reference
+
 The endpoint of a process can be determined in multiple ways, they are:
 
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-\begin{minipage}[b]{0.11\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.23\columnwidth}\raggedright
-Explanation\strut
-\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
-Input arguments\strut
-\end{minipage} & \begin{minipage}[b]{0.25\columnwidth}\raggedright
-Return value\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-getpid\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Determines the endpoint of the process calling the function\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-None\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Endpoint\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-\_pm\_findproc\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Determines the endpoint of the requested process\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Process name, Endpoint (endpoint of process will be inserted into this
-parameter)\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation ; Input arguments ; Return value
+\item
+  getpid ; Determines the endpoint of the process calling the function ;
+  None ; Endpoint l
+\item
+  \_pm\_findproc ; Determines the endpoint of the requested process ;
+  Process name, Endpoint (endpoint of process will be inserted into this
+  parameter) ; Status ;
+\end{itemize}
 
 Besides process specific endpoints there are three special endpoints:
 
-\begin{longtable}[]{@{}lll@{}}
-\toprule
-\begin{minipage}[b]{0.20\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.44\columnwidth}\raggedright
-Explanation\strut
-\end{minipage} & \begin{minipage}[b]{0.27\columnwidth}\raggedright
-Usage, there can be more usages than mentioned below as these are
-examples\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.20\columnwidth}\raggedright
-Any\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright
-The sender or receiver of the message can be any process\strut
-\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
-Can be used for broadcasting a message\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.20\columnwidth}\raggedright
-None\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright
-The sender or receiver of the message can be no process\strut
-\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
-This endpoint will not be used and the usage is unknown at the time of
-writing\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.20\columnwidth}\raggedright
-Self\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright
-The sender or receiver of the message is the same process\strut
-\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
-Can be used to simulate messages that would normally be send from other
-processes\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation ; Usage, there can be more usages than mentioned
+  below as these are examples
+\item
+  Any ; The sender or receiver of the message can be any process ; Can
+  be used for broadcasting a message
+\item
+  None ; The sender or receiver of the message can be no process ; This
+  endpoint will not be used and the usage is unknown to the writer at
+  the time of writing
+\item
+  Self ; The sender or receiver of the message is the same process ; Can
+  be used to simulate messages that would normally be send from other
+  processes
+\end{itemize}
 
 \hypertarget{how-can-messages-be-send-and-received-under-minix}{%
 \subsubsection{How can messages be send and received under
@@ -144,50 +101,20 @@ Minix supports and then how these can be used.
 In Minix there are three basic primitives used to send messages, these
 are:
 
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-\begin{minipage}[b]{0.11\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.23\columnwidth}\raggedright
-Explanation\strut
-\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
-Input arguments\strut
-\end{minipage} & \begin{minipage}[b]{0.25\columnwidth}\raggedright
-Return value\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-Send\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-A message is sent, the sender is blocked until the message is
-delivered\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Receiver endpoint, Message\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-Receive\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-The process is blocked until a message is delivered to them\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Sender endpoint, Message, Status\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-Sendrec\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-A message is sent, the sender is blocked until it receives a reply from
-the receiver\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Receiver endpoint, Message\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation ; Input arguments ; Return value
+\item
+  Send ; A message is sent, the sender is blocked until the message is
+  delivered ; Receiver endpoint, Message ; Status ;
+\item
+  Receive ; The process is blocked until a message is delivered to them
+  ; Sender endpoint, Message, Status ; Status ;
+\item
+  Sendrec ; A message is sent, the sender is blocked until it receives a
+  reply from the receiver ; Receiver endpoint, Message ; Status ;
+\end{itemize}
 
 \hypertarget{how-can-memory-be-shared-between-processes-under-minix}{%
 \subsection{How can memory be shared between processes under
@@ -221,44 +148,30 @@ grantee is the process to which the memory grant was granted.
 
 Minix supports three types of memory grants:
 
-\begin{longtable}[]{@{}ll@{}}
-\toprule
-\begin{minipage}[b]{0.30\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.64\columnwidth}\raggedright
-Explanation\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.30\columnwidth}\raggedright
-Direct grants\strut
-\end{minipage} & \begin{minipage}[t]{0.64\columnwidth}\raggedright
-A memory region of the granter is accessible by the grantee. The data is
-not transferred from the granter to the grantee, the data is only
-accessible to the grantee and the granter is still the owner of the
-data. This grant is direct because there is no middleman\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.30\columnwidth}\raggedright
-Indirect grants\strut
-\end{minipage} & \begin{minipage}[t]{0.64\columnwidth}\raggedright
-Indirect grants are grants that have been transferred by a grantee : the
-grantee delegates its grant to another process. The grantee becomes a
-granter and then passes a newly created memory grant credential to the
-new grantee. The memory grant thus forms a linked list of indirect
-grants, with a direct grant at the start. Indirect grant can themselves
-be transferred to another grantee by creating a new indirect
-grant.\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.30\columnwidth}\raggedright
-Magic grants\strut
-\end{minipage} & \begin{minipage}[t]{0.64\columnwidth}\raggedright
-Magic grants are grants that are made by one process for memory in
-another process. The only service that may create magic grants, is VFS.
-VFS uses magic grants to give other services, direct access to memory in
-user application processes.\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation
+\item
+  Direct grants ; A memory region of the granter is accessible by the
+  grantee. The data is not transferred from the granter to the grantee,
+  the data is only accessible to the grantee and the granter is still
+  the owner of the data. This grant is direct because there is no
+  middleman
+\item
+  Indirect grants ; Indirect grants are grants that have been
+  transferred by a grantee : the grantee delegates its grant to another
+  process. The grantee becomes a granter and then passes a newly created
+  memory grant credential to the new grantee. The memory grant thus
+  forms a linked list of indirect grants, with a direct grant at the
+  start. Indirect grant can themselves be transferred to another grantee
+  by creating a new indirect grant.
+\item
+  Magic grants ; Magic grants are grants that are made by one process
+  for memory in another process. The only service that may create magic
+  grants, is VFS. VFS uses magic grants to give other services, direct
+  access to memory in user application processes.
+\end{itemize}
 
 In this paper only the direct grants will be used.
 
@@ -272,41 +185,19 @@ memory granting will be further discussed.
 In Minix two main function will be used to share data using memory
 grants:
 
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-\begin{minipage}[b]{0.11\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.23\columnwidth}\raggedright
-Explanation\strut
-\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
-Input arguments\strut
-\end{minipage} & \begin{minipage}[b]{0.25\columnwidth}\raggedright
-Return value\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-cpf\_setgrant\_direct\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Grants memory to a specific endpoint and returns the grant id\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Endpoint grantee, Memory address of data to grant, Memory size in bytes,
-Access type\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Grant id\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.11\columnwidth}\raggedright
-sys\_safecopyfrom\strut
-\end{minipage} & \begin{minipage}[t]{0.23\columnwidth}\raggedright
-Copies granted memory from a specific endpoint to a memory address\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-Endpoint granter, Grant id, Grant offset, Memory address to copy data
-into, Memory size in bytes, Segment\strut
-\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
-Status\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{itemize}
+\tightlist
+\item
+  Name ; Explanation ; Input arguments ; Return value
+\item
+  cpf\_setgrant\_direct ; Grants memory to a specific endpoint and
+  returns the grant id ; Endpoint grantee, Memory address of data to
+  grant, Memory size in bytes, Access type ; Grant id
+\item
+  sys\_safecopyfrom ; Copies granted memory from a specific endpoint to
+  a memory address ; Endpoint granter, Grant id, Grant offset, Memory
+  address to copy data into, Memory size in bytes, Segment ; Status
+\end{itemize}
 
 The Access type specifies what kind of access the grantee has over the
 memory, either read, write or map.

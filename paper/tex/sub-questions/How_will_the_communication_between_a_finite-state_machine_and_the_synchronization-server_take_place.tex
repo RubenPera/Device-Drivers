@@ -1,6 +1,3 @@
-\hypertarget{research}{%
-\chapter{Research}\label{research}}
-
 \hypertarget{how-will-the-communication-between-a-finite-state-machine-and-the-synchronization-server-take-place-under-minix}{%
 \section{How will the communication between a finite-state machine and
 the synchronization-server take place under
@@ -59,9 +56,9 @@ The steps of sending a finite-state machine its status are as following:
 \begin{itemize}
 \tightlist
 \item
-  Create new finite-state machine status object.
+  Create a new finite-state machine status object.
 \item
-  Copy the attributes mentioned below into the finite-state machine
+  Copy the attributes mentioned above into the finite-state machine
   status element.
 \item
   Create a memory grant that will share the finite-state machine status
@@ -99,7 +96,7 @@ After the synchronization-server determines the next action the
 finite-state machines will execute this action will be send to the
 finite-state machines.
 
-The steps of sending the action to the finite-state machines is as
+The steps of sending the action to the finite-state machines are as
 following, this assumes the list of finite-state derivatives that will
 execute the action and the action that will be executed is already
 determined:

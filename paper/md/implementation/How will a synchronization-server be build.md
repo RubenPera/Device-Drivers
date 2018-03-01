@@ -1,4 +1,4 @@
-# Implementation
+<!-- # Implementation -->
 
 ## How will a synchronization-server be build
 
@@ -8,7 +8,7 @@ In this section the implementation of the synchronization-server will be given.
 
 For storing the finite-state machine and finite-state machine derivative and their attributes structs will be used:
 
-``` C
+```{.c}
 typedef struct
 {
     int sensitivity_list[ACTIONS];
@@ -28,7 +28,7 @@ typedef struct
 
 For determining the next action that the finite-state machines will execute, the following code snippet is used:
 
-``` C
+```{.c}
 int next_action(
     synchronization_server_t *self)
 {
@@ -114,7 +114,7 @@ In *get_combined_actions* an array of all the actions is determined. In *get_val
 
 For determining the derivatives that will execute an action the following code snippet is used:
 
-``` c
+```{.c}
 void get_executable_derivatives(
     synchronization_server_t *self,
     int derivatives[DERIVATIVES],

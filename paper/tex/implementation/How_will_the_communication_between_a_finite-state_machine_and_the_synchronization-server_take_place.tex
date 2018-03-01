@@ -1,6 +1,3 @@
-\hypertarget{implementation}{%
-\chapter{Implementation}\label{implementation}}
-
 \hypertarget{how-will-the-communication-between-a-finite-state-machine-and-the-synchronization-server-take-place}{%
 \section{How will the communication between a finite-state machine and
 the synchronization-server take
@@ -23,18 +20,16 @@ stored}\label{what-is-a-finite-state-machine-status-and-how-will-it-be-stored}}
 For storing the finite-state machine status and its attributes a struct
 will be used:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{typedef} \KeywordTok{struct}
-\NormalTok{\{}
-    \DataTypeTok{int}\NormalTok{ endpoint;}
-    \DataTypeTok{int}\NormalTok{ index;}
-    \DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS];}
-    \DataTypeTok{int}\NormalTok{ alphabet[ACTIONS];}
+\begin{verbatim}
+typedef struct
+{
+    int endpoint;
+    int index;
+    int sensitivity_list[ACTIONS];
+    int alphabet[ACTIONS];
 
-\NormalTok{\} finite_state_machine_node_status_t;}
-\end{Highlighting}
-\end{Shaded}
+} finite_state_machine_node_status_t;
+\end{verbatim}
 
 \hypertarget{how-will-a-finite-state-machine-status-be-communicated-with-the-synchronization-server}{%
 \subsubsection{How will a finite-state machine status be communicated
@@ -45,22 +40,20 @@ The finite-state machine node will use the following code snippet for
 sending its finite-state machine node status to the
 synchronization-server.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ node_send_status(finite_state_machine_node_t *self)}
-\NormalTok{\{}
-\NormalTok{    finite_state_machine_node_status_t *status;}
+\begin{verbatim}
+void node_send_status(finite_state_machine_node_t *self)
+{
+    finite_state_machine_node_status_t *status;
 
-\NormalTok{    status = finite_state_machine_node_status_init(self);}
+    status = finite_state_machine_node_status_init(self);
 
-\NormalTok{    send_grant_and_block(}
-\NormalTok{        self->endpoint,}
-\NormalTok{        self->send_status_endpoint,}
-\NormalTok{        status,}
-        \KeywordTok{sizeof}\NormalTok{(status))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+    send_grant_and_block(
+        self->endpoint,
+        self->send_status_endpoint,
+        status,
+        sizeof(status))
+}
+\end{verbatim}
 
 The send\_grant\_and\_block is an abstraction method written for
 creating and sending grants and is included in the appendix.
@@ -68,31 +61,29 @@ creating and sending grants and is included in the appendix.
 The synchronization-server will use the following code snippet for
 receiving a finite-state machine node status.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ synchronization_server_receive_status(}
-\NormalTok{    synchronization_server_t *self)}
-\NormalTok{\{}
-\NormalTok{    finite_state_machine_node_derivative_t *derivative;}
+\begin{verbatim}
+void synchronization_server_receive_status(
+    synchronization_server_t *self)
+{
+    finite_state_machine_node_derivative_t *derivative;
 
-\NormalTok{    finite_state_machine_node_status_t *status }\DataTypeTok{int}\NormalTok{ index = NO_ACTION;}
+    finite_state_machine_node_status_t *status int index = NO_ACTION;
 
-\NormalTok{    status = receive_status();}
+    status = receive_status();
 
-\NormalTok{    derivative = synchronization_server_status_to_derivative(status);}
+    derivative = synchronization_server_status_to_derivative(status);
 
-    \ControlFlowTok{if}\NormalTok{ (derivative->index == NO_INDEX)}
-\NormalTok{    \{}
-\NormalTok{        index = synchronization_server_add_derivative(self, derivative);}
-\NormalTok{        derivative_send_index(derivative, self->endpoint, index);}
-\NormalTok{    \}}
-    \ControlFlowTok{else}
-\NormalTok{    \{}
-\NormalTok{        synchronization_server_set_derivative(self, derivative);}
-\NormalTok{    \}}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+    if (derivative->index == NO_INDEX)
+    {
+        index = synchronization_server_add_derivative(self, derivative);
+        derivative_send_index(derivative, self->endpoint, index);
+    }
+    else
+    {
+        synchronization_server_set_derivative(self, derivative);
+    }
+}
+\end{verbatim}
 
 \hypertarget{how-will-the-synchronization-server-communicate-actions-to-the-finite-state-machines}{%
 \subsection{How will the synchronization-server communicate actions to
@@ -102,47 +93,44 @@ machines}\label{how-will-the-synchronization-server-communicate-actions-to-the-f
 The synchronization-server uses the following code snippet for sending
 the determined action to the derivatives.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ send_action_to_derivatives(synchronization_server_t *self,}
-    \DataTypeTok{int}\NormalTok{ derivatives[DERIVATIVES),}
-    \DataTypeTok{int}\NormalTok{ action )}
-\NormalTok{\{}
-    \DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{;}
+\begin{verbatim}
+void send_action_to_derivatives(synchronization_server_t *self,
+    int derivatives[DERIVATIVES),
+    int action )
+{
+    int i = 0;
 
-    \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{0}\NormalTok{; i < ACTIONS; i++)}
-\NormalTok{    \{}
-        \ControlFlowTok{if}\NormalTok{ (derivatives[i] != NO_ACTION)}
-\NormalTok{        \{}
-\NormalTok{            derivative_send_action(self->derivatives[i], self->endpoint, action);}
-\NormalTok{        \}}
-\NormalTok{    \}}
-\NormalTok{\}}
+    for (i = 0; i < ACTIONS; i++)
+    {
+        if (derivatives[i] != NO_ACTION)
+        {
+            derivative_send_action(
+                self->derivatives[i], 
+                self->endpoint, action);
+        }
+    }
+}
 
-\DataTypeTok{void}\NormalTok{ derivative_send_action(}
-\NormalTok{    finite_state_machine_node_derivative_t *self,}
-    \DataTypeTok{int}\NormalTok{ sender,}
-    \DataTypeTok{int}\NormalTok{ action)}
-\NormalTok{\{}
-\NormalTok{    send_action(sender, self->endpoint, action);}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+void derivative_send_action(
+    finite_state_machine_node_derivative_t *self,
+    int sender,
+    int action)
+{
+    send_action(sender, self->endpoint, action);
+}
+\end{verbatim}
 
 The finite-state machine node uses the following code snippet for
 receiving the action.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ driver_receive_action(}
-\NormalTok{    finite_state_machine_node_t *self)}
-\NormalTok{\{}
-    \DataTypeTok{int}\NormalTok{ action;}
+\begin{verbatim}
+void driver_receive_action(
+    finite_state_machine_node_t *self)
+{
+    int action;
 
-\NormalTok{    action = receive_action();}
-\NormalTok{    make_transition(self->fsm, action);}
-\NormalTok{    node_send_status(self);}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
+    action = receive_action();
+    make_transition(self->fsm, action);
+    node_send_status(self);
+}
+\end{verbatim}

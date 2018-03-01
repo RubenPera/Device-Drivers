@@ -10,8 +10,12 @@ def main():
         for file in filenames:
             files.append(format_dirpath_filename(dirpath, file))
 
+    # files = filter_files(files, 'sub')
+
     write_files(files)
 
+def filter_files(files, f):
+    return [file for file in files if f in file]
 
 def write_files(files):
     for file in files:
@@ -25,7 +29,7 @@ def write_files(files):
                 pass
             print(file)
             
-            pypandoc.convert_file(file, 'tex', outputfile=outputfile, extra_args=['--top-level-division=chapter'])
+            pypandoc.convert_file(file, 'tex', format='gfm', outputfile=outputfile, extra_args=['--top-level-division=chapter'])
 
 
 def format_dirpath_filename(dirpath: str, filename: str):

@@ -1,4 +1,4 @@
-# Research
+<!-- # Research -->
 
 ## How will the communication between a finite-state machine and the synchronization-server take place under Minix
 
@@ -26,8 +26,8 @@ These attributes are the only attributes the synchronization-server needs to det
 
 The steps of sending a finite-state machine its status are as following:
 
-- Create new finite-state machine status object.
-- Copy the attributes mentioned below into the finite-state machine status element.
+- Create a new finite-state machine status object.
+- Copy the attributes mentioned above into the finite-state machine status element.
 - Create a memory grant that will share the finite-state machine status with the synchronization server.
 - A new message is created containing the memory grant.
 - The message containing the memory grant is send to the synchronization-server.
@@ -43,7 +43,7 @@ When the finite-state machine status message has been send the synchronization-s
 
 After the synchronization-server determines the next action the finite-state machines will execute this action will be send to the finite-state machines.
 
-The steps of sending the action to the finite-state machines is as following, this assumes the list of finite-state derivatives that will execute the action and the action that will be executed is already determined:
+The steps of sending the action to the finite-state machines are as following, this assumes the list of finite-state derivatives that will execute the action and the action that will be executed is already determined:
 
 - The list of derivatives that will execute the action is iterated.
 - A new message is created containing the to be executed action.

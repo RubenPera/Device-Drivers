@@ -1,6 +1,3 @@
-\hypertarget{implementation}{%
-\chapter{Implementation}\label{implementation}}
-
 \hypertarget{how-will-a-finite-state-machine-be-build}{%
 \section{How will a finite-state machine be
 build}\label{how-will-a-finite-state-machine-be-build}}
@@ -16,18 +13,16 @@ alphabet}\label{how-will-a-finite-state-machine-save-its-transition-table-sensit
 For storing the finite-state machine and its attributes a struct will be
 used:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{typedef} \KeywordTok{struct}
-\NormalTok{\{}
-    \DataTypeTok{int}\NormalTok{ transition_table[STATES][ACTIONS];}
-    \DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS];}
-    \DataTypeTok{int}\NormalTok{ alphabet[ACTIONS];}
-    \DataTypeTok{int}\NormalTok{ cur_state;}
+\begin{verbatim}
+typedef struct
+{
+    int transition_table[STATES][ACTIONS];
+    int sensitivity_list[ACTIONS];
+    int alphabet[ACTIONS];
+    int cur_state;
 
-\NormalTok{\} finite_state_machine_t;}
-\end{Highlighting}
-\end{Shaded}
+} finite_state_machine_t;
+\end{verbatim}
 
 STATES are the total amount of states and ACTIONS are the total amount
 of actions. As C does not support arrays of undetermined sizes, the
@@ -49,16 +44,16 @@ sensitivity-list}\label{how-will-a-finite-state-machine-determine-its-sensitivit
 For determining the finite-state machine its sensitivity-list the
 following code snippet is used:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ fsm_set_sensitivity_list(}
-\NormalTok{    finite_state_machine_t *self,}
-    \DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS])}
-\NormalTok{\{}
-\NormalTok{    array_copy((}\DataTypeTok{int}\NormalTok{ *)self->sensitivity_list, (}\DataTypeTok{int}\NormalTok{ *)self->transition_table[self->cur_state]);}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+void fsm_set_sensitivity_list(
+    finite_state_machine_t *self,
+    int sensitivity_list[ACTIONS])
+{
+    array_copy(
+        (int *)self->sensitivity_list, 
+        (int *)self->transition_table[self->cur_state]);
+}
+\end{verbatim}
 
 The used function array\_copy copies the values of one array to the
 other array and will be included in the appendix.
@@ -70,27 +65,25 @@ alphabet}\label{how-will-a-finite-state-machine-determine-its-alphabet}}
 For determining the finite-state machine its alphabet the following code
 snippet is used:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ fsm_set_alphabet(}
-\NormalTok{    finite_state_machine_t *self)}
-\NormalTok{\{}
-    \DataTypeTok{int}\NormalTok{ s = }\DecValTok{0}\NormalTok{, a = }\DecValTok{0}\NormalTok{;}
+\begin{verbatim}
+void fsm_set_alphabet(
+    finite_state_machine_t *self)
+{
+    int s = 0, a = 0;
 
-    \ControlFlowTok{for}\NormalTok{ (s = }\DecValTok{0}\NormalTok{; s < STATES; s++)}
-\NormalTok{    \{}
-        \ControlFlowTok{for}\NormalTok{ (a = }\DecValTok{0}\NormalTok{; a < }\DecValTok{0}\NormalTok{; a++)}
-\NormalTok{        \{}
-            \ControlFlowTok{if}\NormalTok{ (self->transition_table[s][a] != NO_ACTION &&}
-\NormalTok{                self->alphabet[a] == NO_ACTION)}
-\NormalTok{            \{}
-\NormalTok{                self->alphabet[a] = HAS_ACTION;}
-\NormalTok{            \}}
-\NormalTok{        \}}
-\NormalTok{    \}}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+    for (s = 0; s < STATES; s++)
+    {
+        for (a = 0; a < 0; a++)
+        {
+            if (self->transition_table[s][a] != NO_ACTION &&
+                self->alphabet[a] == NO_ACTION)
+            {
+                self->alphabet[a] = HAS_ACTION;
+            }
+        }
+    }
+}
+\end{verbatim}
 
 \hypertarget{how-will-a-finite-state-machine-make-transitions}{%
 \subsection{How will a finite-state machine make
@@ -99,41 +92,39 @@ transitions}\label{how-will-a-finite-state-machine-make-transitions}}
 For making transitions the finite-state machine uses the following code
 snippet.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ make_transition(}
-\NormalTok{    finite_state_machine_t *self,}
-    \DataTypeTok{int}\NormalTok{ action)}
-\NormalTok{\{}
-    \DataTypeTok{int}\NormalTok{ sensitivity_list[ACTIONS];}
+\begin{verbatim}
+void make_transition(
+    finite_state_machine_t *self,
+    int action)
+{
+    int sensitivity_list[ACTIONS];
 
-    \ControlFlowTok{if}\NormalTok{ (fsm_can_execute_action(self, action))}
-\NormalTok{    \{}
-\NormalTok{        execute_action(self, action, sensitivity_list);}
+    if (fsm_can_execute_action(self, action))
+    {
+        execute_action(self, action, sensitivity_list);
 
-        \ControlFlowTok{if}\NormalTok{ (sensitivity_list != NULL)}
-\NormalTok{        \{}
-\NormalTok{            array_copy(self->sensitivity_list, sensitivity_list);}
-\NormalTok{            self->cur_state = fsm_next_state(self, action);}
-\NormalTok{        \}}
-\NormalTok{    \}}
-\NormalTok{\}}
+        if (sensitivity_list != NULL)
+        {
+            array_copy(self->sensitivity_list, sensitivity_list);
+            self->cur_state = fsm_next_state(self, action);
+        }
+    }
+}
 
-\DataTypeTok{int}\NormalTok{ fsm_can_execute_action(}
-\NormalTok{    finite_state_machine_t *self,}
-    \DataTypeTok{int}\NormalTok{ action)}
-\NormalTok{\{}
-    \ControlFlowTok{return}\NormalTok{ fsm_next_state(self, action) != NO_ACTION;}
-\NormalTok{\}}
+int fsm_can_execute_action(
+    finite_state_machine_t *self,
+    int action)
+{
+    return fsm_next_state(self, action) != NO_ACTION;
+}
 
-\DataTypeTok{int}\NormalTok{ fsm_next_state(}
-\NormalTok{    finite_state_machine_t *self,}
-    \DataTypeTok{int}\NormalTok{ action)}
-\NormalTok{\{}
-    \ControlFlowTok{return}\NormalTok{ self->transition_table[self->cur_state][action];}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+int fsm_next_state(
+    finite_state_machine_t *self,
+    int action)
+{
+    return self->transition_table[self->cur_state][action];
+}
+\end{verbatim}
 
 However, the function make\_transition has to implemented by each
 finite-state machine that uses it, as the function execute\_action is

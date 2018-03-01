@@ -1,6 +1,3 @@
-\hypertarget{research}{%
-\chapter{Research}\label{research}}
-
 \hypertarget{how-will-a-finite-state-machine-be-build}{%
 \section{How will a finite-state machine be
 build}\label{how-will-a-finite-state-machine-be-build}}
@@ -42,30 +39,29 @@ transition-table will have the following requirements:
   Relative fast lookup time.
 \end{itemize}
 
-This leads to the following design: The transition-table will consist of
-a two-dimensional array, where the index of the first array is the
-current state, and the index of the second array is the to be executed
-action.\\
+This leads to the following design:\\
+The transition-table will consist of a two-dimensional array, where the
+index of the first array is the current state, and the index of the
+second array is the to be executed action.\\
 The result will be in range of -1 to the maximum value of an integer. Is
 the result -1 then the to be executed action is not a valid action from
 the current state, any other value is the new state the finite-state
 machine will be in after executing the action.\\
 The size of the outer array, the array using state as index, will be the
-sum of the total amount of states in the fsp. The size of the inner
+sum of the total amount of states in the FSP. The size of the inner
 arrays, the arrays using actions as indexes, will be the sum of the
-total amount of actions in the fsp.
+total amount of actions in the FSP.
 
 This design has the following benefits:
 
 \begin{itemize}
 \tightlist
 \item
-  \(O (1)\) lookup time, because indexes in arrays are used, this means
+  \$O(1)\$ lookup time, because indexes in arrays are used, this means
   that the time to determine the next state and if an action can be
   executed is relative short.
 \item
   The sensitivity-list can be quickly derived from the transition-table.
-  TODO: add ref to sensitivity-list
 \end{itemize}
 
 This design has one disadvantage, an amount of data is not used, while
@@ -93,10 +89,10 @@ The sensitivity-list has the following requirements:
   Relative fast lookup time.
 \end{itemize}
 
-This leads to the following design: The sensitivity-list will consist of
-an one-dimensional array where the index is the to be executed action
-and the result will determine if the finite-state machine can execute
-the action.\\
+This leads to the following design:\\
+The sensitivity-list will consist of an one-dimensional array where the
+index is the to be executed action and the result will determine if the
+finite-state machine can execute the action.\\
 The result will be in range of -1 to the maximum value of an integer. Is
 the result -1 then the to be executed action is not a valid action from
 the current state, any other value means that the action can be
@@ -126,14 +122,13 @@ The alphabet has the following requirements:
   Relative fast lookup time.
 \end{itemize}
 
-This leads to the following design: The alphabet will consist of an
-one-dimensional array where the index is the to be executed action and
-the result will determine if the finite-state machine can execute the
-action.\\
+This leads to the following design:\\
+The alphabet will consist of an one-dimensional array where the index is
+the to be executed action and the result will determine if the
+finite-state machine can execute the action.\\
 The result will be in range of -1 to the maximum value of an integer. Is
-the result -1 then the to be executed action is not a valid action
-cannot ever be executed, any other value means that the action can be
-executed.
+the result -1 then the to be executed action is not a valid action, any
+other value means that the action can be executed.
 
 The design of the alphabet is similar to that of the inner arrays of the
 transition-table, and has therefore the same advantages and
@@ -184,11 +179,12 @@ The following steps will be taken to determine the alphabet:
 \begin{itemize}
 \tightlist
 \item
-  Create an alphabet with all values on False.
+  Create an alphabet with all values on -1.
 \item
   Iterate over every action in the transition-table.
 \item
-  If an action can be executed set that action in the alphabet on True.
+  If an action can be executed set that action in the alphabet on
+  anything except -1.
 \end{itemize}
 
 \hypertarget{how-will-a-finite-state-machine-make-transitions}{%
@@ -199,16 +195,16 @@ Making a transition is to execute an action, determine a new
 sensitivity-list and new current state, and setting the new
 sensitivity-list and current state.
 
-How a action is executed and the new sensitivity-list is determined is
+How an action is executed and the new sensitivity-list is determined is
 dependent on what kind of finite-state machine is making the transition.
 There are two different kind of transitions, a Thread transition, and a
 device-driver transition.
 
 \textbf{Thread transition:}\\
-The new sensitivity-list is a direct consequence of the fsp design.
+The new sensitivity-list is a direct consequence of the FSP design.
 
 \textbf{Device-driver transition:}\\
-The new sensitivity-list is either direct consequence of the fsp design
+The new sensitivity-list is either direct consequence of the FSP design
 or a consequence of the hardware or sensor data the device-driver
 operates upon.
 
@@ -225,8 +221,9 @@ This leads to the following steps of making a transition:
   implementation. An empty sensitivity-list could also be returned
   indicating that the action could not successfully execute.
 \item
-  Checking if the new sensitivity-list is not empty, if it is empty not
-  proceed.
+  Checking if the new sensitivity-list is not empty, if it is not empty
+  proceed, however if the FSP model is well implemented this will never
+  happen.
 \item
   Determine the new state of the finite-state machine using its
   transition-table, current state and executed action.

@@ -1,4 +1,4 @@
-# Research
+<!-- # Research -->
 
 ## How will a finite-state machine be build
 
@@ -19,16 +19,16 @@ Because the application that will be build in this paper is supposed to be real-
 - Can be used to determine the next state given the current state and the to be executed action.
 - Relative fast lookup time.
 
-This leads to the following design:
+This leads to the following design:  
 The transition-table will consist of a two-dimensional array, where the index of the first array is the current state, and the index of the second array is the to be executed action.  
 The result will be in range of -1 to the maximum value of an integer. Is the result -1 then the to be executed action is not a valid action from the current state, any other value is the new state the finite-state machine will be in after executing the action.  
-The size of the outer array, the array using state as index, will be the sum of the total amount of states in the fsp.
-The size of the inner arrays, the arrays using actions as indexes, will be the sum of the total amount of actions in the fsp.
+The size of the outer array, the array using state as index, will be the sum of the total amount of states in the FSP.
+The size of the inner arrays, the arrays using actions as indexes, will be the sum of the total amount of actions in the FSP.
 
 This design has the following benefits:
 
-- $O (1)$ lookup time, because indexes in arrays are used, this means that the time to determine the next state and if an action can be executed is relative short.
-- The sensitivity-list can be quickly derived from the transition-table. TODO: add ref to sensitivity-list
+- $O(1)$ lookup time, because indexes in arrays are used, this means that the time to determine the next state and if an action can be executed is relative short.
+- The sensitivity-list can be quickly derived from the transition-table.
 
 This design has one disadvantage, an amount of data is not used, while still being allocated, and therefore wasted.
 In a more advanced language a hash table would have been used, and this disadvantage would not apply.
@@ -43,7 +43,7 @@ The sensitivity-list has the following requirements:
 - Store the actions that can be executed in the current state.
 - Relative fast lookup time.
 
-This leads to the following design:
+This leads to the following design:  
 The sensitivity-list will consist of an one-dimensional array where the index is the to be executed action and the result will determine if the finite-state machine can execute the action.  
 The result will be in range of -1 to the maximum value of an integer. Is the result -1 then the to be executed action is not a valid action from the current state, any other value means that the action can be executed.
 
@@ -59,9 +59,9 @@ The alphabet has the following requirements:
 - Store the actions that the finite-state machine is ever capable of executing.
 - Relative fast lookup time.
 
-This leads to the following design:
+This leads to the following design:  
 The alphabet will consist of an one-dimensional array where the index is the to be executed action and the result will determine if the finite-state machine can execute the action.  
-The result will be in range of -1 to the maximum value of an integer. Is the result -1 then the to be executed action is not a valid action cannot ever be executed, any other value means that the action can be executed.
+The result will be in range of -1 to the maximum value of an integer. Is the result -1 then the to be executed action is not a valid action, any other value means that the action can be executed.
 
 The design of the alphabet is similar to that of the inner arrays of the transition-table, and has therefore the same advantages and disadvantages as the transition-table.
 
@@ -85,26 +85,26 @@ The alphabet contains all the actions that a finite-state machine can execute fr
 
 The following steps will be taken to determine the alphabet:
 
-- Create an alphabet with all values on False.
+- Create an alphabet with all values on -1.
 - Iterate over every action in the transition-table.
-- If an action can be executed set that action in the alphabet on True.
+- If an action can be executed set that action in the alphabet on anything except -1.
 
 #### How will a finite-state machine make transitions
 
 Making a transition is to execute an action, determine a new sensitivity-list and new current state, and setting the new sensitivity-list and current state.
 
-How a action is executed and the new sensitivity-list is determined is dependent on what kind of finite-state machine is making the transition. There are two different kind of transitions, a Thread transition, and a device-driver transition.
+How an action is executed and the new sensitivity-list is determined is dependent on what kind of finite-state machine is making the transition. There are two different kind of transitions, a Thread transition, and a device-driver transition.
 
 **Thread transition:**  
-The new sensitivity-list is a direct consequence of the fsp design.
+The new sensitivity-list is a direct consequence of the FSP design.
 
 **Device-driver transition:**  
-The new sensitivity-list is either direct consequence of the fsp design or a consequence of the hardware or sensor data the device-driver operates upon.
+The new sensitivity-list is either direct consequence of the FSP design or a consequence of the hardware or sensor data the device-driver operates upon.
 
 This leads to the following steps of making a transition:
 
 - Determine if the action can be executed, using the transition-table, current state and to be executed action.
 - Executing the action, this will return the new sensitivity-list, this could be either the Thread implementation or the device-driver implementation. An empty sensitivity-list could also be returned indicating that the action could not successfully execute.
-- Checking if the new sensitivity-list is not empty, if it is empty not proceed.
+- Checking if the new sensitivity-list is not empty, if it is not empty proceed, however if the FSP model is well implemented this will never happen.
 - Determine the new state of the finite-state machine using its transition-table, current state and executed action.
 - Set the finite-state machine its new state and the new sensitivity-list.

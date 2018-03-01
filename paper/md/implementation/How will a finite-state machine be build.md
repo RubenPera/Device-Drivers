@@ -1,4 +1,4 @@
-# Implementation
+<!-- # Implementation -->
 
 ## How will a finite-state machine be build
 
@@ -8,7 +8,7 @@ In this section the implementation of the finite-state machine will be given.
 
 For storing the finite-state machine and its attributes a struct will be used:
 
-~~~ C
+```{.c} 
 typedef struct
 {
     int transition_table[STATES][ACTIONS];
@@ -17,7 +17,7 @@ typedef struct
     int cur_state;
 
 } finite_state_machine_t;
-~~~
+```
 
 STATES are the total amount of states and ACTIONS are the total amount of actions. As C does not support arrays of undetermined sizes, the total amount of states and actions must be known during compilation, these and other constant values are stored in one shared constant file.
 
@@ -29,12 +29,14 @@ In this section the implementation of determining the sensitivity-list and alpha
 
 For determining the finite-state machine its sensitivity-list the following code snippet is used:
 
-``` C
+```{.C}
 void fsm_set_sensitivity_list(
     finite_state_machine_t *self,
     int sensitivity_list[ACTIONS])
 {
-    array_copy((int *)self->sensitivity_list, (int *)self->transition_table[self->cur_state]);
+    array_copy(
+        (int *)self->sensitivity_list, 
+        (int *)self->transition_table[self->cur_state]);
 }
 ```
 
@@ -44,7 +46,7 @@ The used function array_copy copies the values of one array to the other array a
 
 For determining the finite-state machine its alphabet the following code snippet is used:
 
-``` C
+```{.C}
 void fsm_set_alphabet(
     finite_state_machine_t *self)
 {
@@ -68,7 +70,7 @@ void fsm_set_alphabet(
 
 For making transitions the finite-state machine uses the following code snippet.
 
-``` C
+```{.C}
 void make_transition(
     finite_state_machine_t *self,
     int action)
